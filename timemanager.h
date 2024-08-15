@@ -13,7 +13,7 @@ public:
     static void UpdateTime();
 
 private:
-    static constexpr double DELTA_TIME = 0.05;
+    static constexpr double DELTA_TIME = 0.02;
     static float start_time;
     static float current_time;
 

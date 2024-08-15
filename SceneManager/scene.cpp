@@ -1,6 +1,6 @@
 #include "scene.h"
 
-Scene::Scene(QPainter* widget_painter) : painter(widget_painter)
+Scene::Scene()
 {
 
 }
@@ -21,7 +21,7 @@ void Scene::on_update(int delta)
     qDebug("scene update");
 }
 
-void Scene::on_draw()
+void Scene::on_draw(QPainter* widget_painter)
 {
     qDebug("draw");
 }
@@ -34,3 +34,6 @@ void Scene::on_exit()
 {
     qDebug("scene exit");
 }
+
+
+

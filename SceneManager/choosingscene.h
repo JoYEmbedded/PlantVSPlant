@@ -6,12 +6,12 @@
 class ChoosingScene : public Scene
 {
 public:
-    ChoosingScene(QPainter* widget_painter);
+    ChoosingScene();
     ~ChoosingScene();
 
     void on_enter();
     void on_update(int delta);
-    void on_draw();
+    void on_draw(QPainter* widget_painter);
     void on_input();
     void on_exit();
 };

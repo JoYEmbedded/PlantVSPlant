@@ -31,7 +31,6 @@ public:
         Game
     };
     TimeManager time_manager;
-    QPainter* painter;
     void set_current_scene(Scene* scene);
     void switch_to(SceneType);
     void paintEvent(QPaintEvent *event) override;

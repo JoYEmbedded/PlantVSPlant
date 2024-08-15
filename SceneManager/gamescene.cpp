@@ -1,6 +1,6 @@
 #include "gamescene.h"
 
-GameScene::GameScene(QPainter* widget_painter) : Scene(widget_painter)
+GameScene::GameScene()
 {
 
 }
@@ -21,7 +21,7 @@ void GameScene::on_update(int delta)
     qDebug("游戏正在运行...");
 }
 
-void GameScene::on_draw()
+void GameScene::on_draw(QPainter* widget_painter)
 {
     qDebug("游戏局内绘图内容");
 }

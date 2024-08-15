@@ -12,7 +12,8 @@ extern SceneManager* scene_manager;
 class Animation
 {
 public:
-    Animation(QPainter* widget_painter);
+    // Animation(QPainter* widget_painter);
+    Animation();
     ~Animation();
 
     void set_interval(int ms);
@@ -23,7 +24,7 @@ public:
     QImage& get_frame();
     bool check_finished();
     void on_update(int delta);
-    void on_draw(int x, int y);
+    void on_draw(int x, int y, QPainter* widget_painter);
     void set_callback(std::function<void()> callback);
 
 private:
@@ -31,9 +32,8 @@ private:
     int interval = 0;   //帧间隔
     int idx_frame = 0;  //帧索引
     bool is_loop = true;
-    QPainter* painter;
+    // QPainter* painter;
     Atlas* m_atlas;
-
     std::function<void()> callback;
 
 };

@@ -14,7 +14,7 @@ SOURCES += \
     SceneManager/menuscene.cpp \
     SceneManager/scene.cpp \
     SceneManager/scenemanager.cpp \
-    animation.cpp \
+    graphics/animation.cpp \
     graphics/atlas.cpp \
     main.cpp \
     timemanager.cpp
@@ -25,7 +25,7 @@ HEADERS += \
     SceneManager/menuscene.h \
     SceneManager/scene.h \
     SceneManager/scenemanager.h \
-    animation.h \
+    graphics/animation.h \
     graphics/atlas.h \
     timemanager.h \
     util.h

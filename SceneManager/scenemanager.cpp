@@ -3,7 +3,6 @@
 
 SceneManager::SceneManager(QWidget *parent)
     : QWidget(parent)
-    , painter(nullptr)
     , ui(new Ui::SceneManager)
 {
     ui->setupUi(this);
@@ -73,14 +72,18 @@ void SceneManager::update_logic()
 {
     time_manager.UpdateTime();
     current_scene->on_update(time_manager.GetCurrentSecond());
-    current_scene->on_draw();
+    // current_scene->on_draw(painter);
+    this->repaint();
     qDebug("update logic");
 }
 
 void SceneManager::paintEvent(QPaintEvent* event)
 {
 
-    painter = new QPainter(this);
-    painter->drawPixmap(rect(),QPixmap(":/static/resources/1P.png"));
-    painter->end();
+    QPainter my_painter(this);
+    my_painter.begin(this);
+    current_scene->on_draw(&my_painter);
+
+    // my_painter.drawPixmap(rect(),QPixmap(":/static/resources/1P.png"));
+    my_painter.end();
 }

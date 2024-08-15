@@ -11,7 +11,10 @@ void Atlas::load_from_file(QString path, int num)
     for (int i = 0; i < num; i++)
     {
         QString single_img_name = QString("%1%2").arg(path).arg(i+1);
-        img_list[i].load(single_img_name);
+        if(!img_list[i].load(single_img_name))
+        {
+            qDebug("fail loading");
+        }
     }
 }
 

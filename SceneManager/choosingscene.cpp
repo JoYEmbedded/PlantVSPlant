@@ -1,6 +1,6 @@
 #include "choosingscene.h"
 
-ChoosingScene::ChoosingScene(QPainter* widget_painter) : Scene(widget_painter)
+ChoosingScene::ChoosingScene()
 {
 
 }
@@ -17,7 +17,7 @@ void ChoosingScene::on_update(int delta)
 
 }
 
-void ChoosingScene::on_draw()
+void ChoosingScene::on_draw(QPainter* widget_painter)
 {
 
 }

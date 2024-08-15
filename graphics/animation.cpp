@@ -1,8 +1,15 @@
 #include "animation.h"
 
-Animation::Animation(QPainter* widget_painter)
+// Animation::Animation(QPainter* widget_painter)
+// {
+//     painter = widget_painter;
+// }
+
+Animation::Animation()
 {
-    painter = widget_painter;
+    // painter = nullptr;
+    timer = 0;
+    idx_frame = 0;
 }
 
 void Animation::reset()
@@ -64,16 +71,15 @@ void Animation::on_update(int delta)
     }
 }
 
-void Animation::on_draw(int x, int y)
+void Animation::on_draw(int x, int y, QPainter* widget_painter)
 {
-    int wx = m_atlas->get_img(idx_frame).width();
-    int wy = m_atlas->get_img(idx_frame).height();
-    painter->drawImage(wx,wy,m_atlas->get_img(idx_frame));
-    painter->drawImage(x,y, m_atlas->get_img(idx_frame));
 
+    // widget_painter->drawPixmap(QRect(500,200,300,400),QPixmap(":/static/resources/1P.png"));             //可画图
+    widget_painter->drawImage(x,y, m_atlas->get_img(idx_frame));
 }
 
 void Animation::set_callback(std::function<void()> callback)
 {
     this->callback = callback;
 }
+

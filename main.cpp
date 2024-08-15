@@ -86,14 +86,15 @@ void load_game_resources();
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    load_game_resources();
     scene_manager = new SceneManager();
     scene_manager->show();
-    menu_scene = new MenuScene(scene_manager->painter);
-    game_scene = new GameScene(scene_manager->painter);
-    choosing_scene = new ChoosingScene(scene_manager->painter);
+    menu_scene = new MenuScene();
+    game_scene = new GameScene();
+    choosing_scene = new ChoosingScene();
 
     scene_manager->set_current_scene(menu_scene);
-    load_game_resources();
+
 
     return a.exec();
 }
@@ -128,13 +129,13 @@ void load_game_resources()
     img_1P_cursor.load(":/static/resources/1P_cursor.png");
     img_2P_cursor.load(":/static/resources/2P_cursor.png");
 
-    atlas_peashooter_idle_right.load_from_file(":/Plants/Peashooter/resources/peashooter_idle_",9);
+    atlas_peashooter_idle_right.load_from_file(":/Plants/PeaShooter/resources/peashooter_idle_",9);
     flip_atlas(atlas_peashooter_idle_left, atlas_peashooter_idle_right);
-    atlas_peashooter_run_right.load_from_file(":/Plants/Peashooter/resources/peashooter_run_",5);
+    atlas_peashooter_run_right.load_from_file(":/Plants/PeaShooter/resources/peashooter_run_",5);
     flip_atlas(atlas_peashooter_run_left, atlas_peashooter_run_right);
-    atlas_peashooter_attack_ex_right.load_from_file(":/Plants/Peashooter/resources/peashooter_attack_ex_",3);
+    atlas_peashooter_attack_ex_right.load_from_file(":/Plants/PeaShooter/resources/peashooter_attack_ex_",3);
     flip_atlas(atlas_peashooter_attack_ex_left, atlas_peashooter_die_right);
-    atlas_peashooter_die_right.load_from_file(":/Plants/Peashooter/resources/peashooter_die_",4);
+    atlas_peashooter_die_right.load_from_file(":/Plants/PeaShooter/resources/peashooter_die_",4);
     flip_atlas(atlas_peashooter_die_left, atlas_peashooter_die_right);
 
     atlas_sunflower_idle_right.load_from_file(":/Plants/Sunflower/resources/sunflower_idle_",8);
@@ -147,7 +148,7 @@ void load_game_resources()
     flip_atlas(atlas_sunflower_die_left, atlas_sunflower_die_right);
 
     img_pea.load(":/static/resources/pea.png");
-    atlas_pea_break.load_from_file(":/Plants/Peashooter/resources/pea_break_",3);
+    atlas_pea_break.load_from_file(":/Plants/PeaShooter/resources/pea_break_",3);
     atlas_sun.load_from_file(":/Plants/Sunflower/resources/sun_", 5);
     atlas_sun_explode.load_from_file(":/Plants/Sunflower/resources/sun_explode_", 5);
     atlas_sun_ex.load_from_file(":/Plants/Sunflower/resources/sun_ex_", 5);
