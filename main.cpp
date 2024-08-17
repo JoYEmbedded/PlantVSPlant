@@ -7,7 +7,7 @@
 #include "util.h"
 #include <QApplication>
 
-QImage img_menu_backgroud;                      //主菜单背景图片
+QImage img_menu_background;                      //主菜单背景图片
 QImage img_vs;;                                 //VS艺术字图片
 QImage img_1P;                                  //1P文本图片
 QImage img_2P;                                  //2P文本图片
@@ -75,6 +75,21 @@ QImage img_winner_bar;                          //获胜玩家文本背景图片
 QImage img_avatar_peashooter;                   //豌豆射手头像图片
 QImage img_avatar_sunflower;                    //向日葵头像图片
 
+QMediaPlayer music_bgm_game;
+QMediaPlayer music_bgm_menu;
+QMediaPlayer music_pea_break_1;
+QMediaPlayer music_pea_break_2;
+QMediaPlayer music_pea_break_3;
+QMediaPlayer music_pea_shoot_1;
+QMediaPlayer music_pea_shoot_2;
+QMediaPlayer music_pea_shoot_ex;
+QMediaPlayer music_sun_explode;
+QMediaPlayer music_sun_explode_ex;
+QMediaPlayer music_sun_text;
+QMediaPlayer music_ui_confirm;
+QMediaPlayer music_ui_switch;
+QMediaPlayer music_ui_win;
+QAudioOutput* music_audio_output;
 
 Scene* menu_scene = nullptr;        //注意此处是Scene而非MenuScene
 Scene* game_scene = nullptr;
@@ -101,7 +116,7 @@ int main(int argc, char *argv[])
 
 void load_game_resources()
 {
-    img_menu_backgroud.load(":/static/resources/menu_background.png");
+    img_menu_background.load(":/static/resources/menu_background.png");
 
     img_vs.load(":/static/resources/VS.png");
     img_1P.load(":/static/resources/1P.png");
@@ -166,6 +181,52 @@ void load_game_resources()
     img_avatar_sunflower.load(":/static/resources/avatar_peashooter.png");
 
     //音乐资源加载
+
+    music_audio_output = new QAudioOutput;
+    // music_audio_output->setVolume(100);
+    QUrl music_url = QUrl("qrc:/music/resources/bgm_game.mp3");
+    music_bgm_game.setSource(music_url);
+    music_bgm_game.setLoops(QMediaPlayer::Loops::Infinite);
+
+    music_url = QUrl("qrc:/music/resources/bgm_menu.mp3");
+    music_bgm_menu.setSource(music_url);
+    music_bgm_menu.setLoops(QMediaPlayer::Loops::Infinite);
+
+    music_url = QUrl("qrc:/music/resources/pea_break_1.mp3");
+    music_pea_break_1.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/pea_break_2.mp3");
+    music_pea_break_2.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/pea_break_3.mp3");
+    music_pea_break_3.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/pea_shoot_1.mp3");
+    music_pea_shoot_1.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/pea_shoot_2.mp3");
+    music_pea_shoot_2.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/pea_shoot_ex.mp3");
+    music_pea_shoot_ex.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/sun_explode.mp3");
+    music_sun_explode.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/sun_explode_ex.mp3");
+    music_sun_explode_ex.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/sun_text.mp3");
+    music_sun_text.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/ui_confirm.wav");
+    music_ui_confirm.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/ui_switch.wav");
+    music_ui_switch.setSource(music_url);
+
+    music_url = QUrl("qrc:/music/resources/ui_win.wav");
+    music_ui_win.setSource(music_url);
 
 
 

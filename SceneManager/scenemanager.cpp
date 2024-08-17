@@ -86,7 +86,7 @@ void SceneManager::paintEvent(QPaintEvent* event)
 
     QPainter my_painter(this);
     my_painter.begin(this);
-    current_scene->on_draw(&my_painter);
+    current_scene->on_draw(&my_painter, main_camera);
 
     // my_painter.drawPixmap(rect(),QPixmap(":/static/resources/1P.png"));
     my_painter.end();

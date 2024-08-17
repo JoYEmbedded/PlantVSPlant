@@ -6,8 +6,14 @@
 #include "./graphics/animation.h"
 #include "timer.h"
 
+extern QImage img_menu_background;
 extern Atlas atlas_peashooter_run_right;
+
+extern QMediaPlayer music_bgm_menu;
+extern QAudioOutput* music_audio_output;
+
 extern SceneManager* scene_manager;
+
 
 class MenuScene : public Scene
 {
@@ -17,7 +23,7 @@ public:
 
     void on_enter();
     void on_update(int delta);
-    void on_draw(QPainter* widget_painter);
+    void on_draw(QPainter* widget_painter, const Camera& camera);
     void on_input();
     void on_exit();
     void paint(QPainter* widget_painter);

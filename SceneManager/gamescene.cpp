@@ -10,6 +10,8 @@ GameScene::~GameScene() {}
 void GameScene::on_enter()
 {
     qDebug("进入游戏局内场景");
+    music_bgm_game.setAudioOutput(music_audio_output);
+    music_bgm_game.play();
 }
 
 void GameScene::on_input()
@@ -21,7 +23,7 @@ void GameScene::on_update(int delta)
     qDebug("游戏正在运行...");
 }
 
-void GameScene::on_draw(QPainter* widget_painter)
+void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
 {
     qDebug("游戏局内绘图内容");
 

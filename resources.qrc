@@ -134,4 +134,24 @@
         <file>resources/land_effect_1.png</file>
         <file>resources/land_effect_2.png</file>
     </qresource>
+    <qresource prefix="/music">
+        <file>resources/bgm_game.mp3</file>
+        <file>resources/bgm_menu.mp3</file>
+        <file>resources/bubbles_shot.mp3</file>
+        <file>resources/bubbles_shot_ex.mp3</file>
+        <file>resources/nut_dash.wav</file>
+        <file>resources/nut_explode.mp3</file>
+        <file>resources/pea_break_1.mp3</file>
+        <file>resources/pea_break_2.mp3</file>
+        <file>resources/pea_break_3.mp3</file>
+        <file>resources/pea_shoot_1.mp3</file>
+        <file>resources/pea_shoot_2.mp3</file>
+        <file>resources/pea_shoot_ex.mp3</file>
+        <file>resources/sun_explode.mp3</file>
+        <file>resources/sun_explode_ex.mp3</file>
+        <file>resources/sun_text.mp3</file>
+        <file>resources/ui_confirm.wav</file>
+        <file>resources/ui_switch.wav</file>
+        <file>resources/ui_win.wav</file>
+    </qresource>
 </RCC>

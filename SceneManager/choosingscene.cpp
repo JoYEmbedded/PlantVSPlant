@@ -17,7 +17,7 @@ void ChoosingScene::on_update(int delta)
 
 }
 
-void ChoosingScene::on_draw(QPainter* widget_painter)
+void ChoosingScene::on_draw(QPainter* widget_painter, const Camera& camera)
 {
 
 }

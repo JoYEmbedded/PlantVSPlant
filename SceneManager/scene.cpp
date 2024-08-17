@@ -21,7 +21,7 @@ void Scene::on_update(int delta)
     qDebug("scene update");
 }
 
-void Scene::on_draw(QPainter* widget_painter)
+void Scene::on_draw(QPainter* widget_painter, const Camera& camera)
 {
     qDebug("draw");
 }

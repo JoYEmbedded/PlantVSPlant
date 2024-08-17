@@ -27,6 +27,8 @@ void MenuScene::on_enter()
         });
     // qDebug("atlas init success");
     camera.shake(10,350);
+    music_bgm_menu.setAudioOutput(music_audio_output);
+    music_bgm_menu.play();
 
 }
 
@@ -40,11 +42,12 @@ void MenuScene::on_update(int delta)
     timer.on_update(delta);                                 //短期时间
 }
 
-void MenuScene::on_draw(QPainter* widget_painter)
+void MenuScene::on_draw(QPainter* widget_painter, const Camera& camera)
 {
     // qDebug("menu draw");
     const QVector2D pos_camera = camera.get_position();
     animation_peashooter_run_right.on_draw((int)(100 - pos_camera.x()),(int)(100 - pos_camera.y()), widget_painter);
+    widget_painter->drawImage(QPoint(0,0), img_menu_background);
 }
 
 void MenuScene::on_input()

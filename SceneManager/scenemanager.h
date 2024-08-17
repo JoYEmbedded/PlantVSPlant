@@ -2,10 +2,14 @@
 #define SCENEMANAGER_H
 
 #include "scene.h"
+#include "camera.h"
+#include <QImage>
 #include <QWidget>
 #include <QPainter>
 #include <QEvent>
 #include <QTimer>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 extern Scene* menu_scene;       //此处思想很独特
 extern Scene* game_scene;
@@ -29,6 +33,8 @@ public:
         Choosing,
         Game
     };
+    Camera main_camera;
+
     void set_current_scene(Scene* scene);
     void switch_to(SceneType);
     void paintEvent(QPaintEvent *event) override;
@@ -37,7 +43,6 @@ private:
     Ui::SceneManager *ui;
     Scene* current_scene = nullptr;
     QTimer timer;
-
 
     bool eventFilter(QObject* obj, QEvent* event) override;
     void input_process();
