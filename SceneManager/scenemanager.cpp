@@ -8,9 +8,8 @@ SceneManager::SceneManager(QWidget *parent)
     ui->setupUi(this);
     setFixedSize(1280,720);
     installEventFilter(this);
-    time_manager.Init();
+    timer.setInterval(20);
     connect(&timer,&QTimer::timeout,this, &SceneManager::update_logic);
-    timer.setInterval(50);
     timer.start();
 
 }
@@ -59,8 +58,14 @@ bool SceneManager::eventFilter(QObject* obj, QEvent* event)
         switch_to(SceneType::Choosing);
         return true;
     }
-    else if(current_scene == choosing_scene)
+    if(current_scene == choosing_scene && event->type() == QEvent::KeyPress)
     {
+        switch_to(SceneType::Game);
+        return true;
+    }
+    if(current_scene == game_scene && event->type() == QEvent::KeyPress)
+    {
+        switch_to(SceneType::Menu);
         return true;
     }
     QObject::eventFilter(obj, event);
@@ -70,11 +75,10 @@ bool SceneManager::eventFilter(QObject* obj, QEvent* event)
 
 void SceneManager::update_logic()
 {
-    time_manager.UpdateTime();
-    current_scene->on_update(time_manager.GetCurrentSecond());
+    current_scene->on_update(timer.interval());      //长期时间
     // current_scene->on_draw(painter);
     this->repaint();
-    qDebug("update logic");
+    // qDebug("update logic");
 }
 
 void SceneManager::paintEvent(QPaintEvent* event)

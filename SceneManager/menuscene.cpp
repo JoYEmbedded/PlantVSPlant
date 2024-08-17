@@ -9,32 +9,42 @@ void MenuScene::on_enter()
 {
     qDebug("menu enter");
     animation_peashooter_run_right.set_atlas(&atlas_peashooter_run_right);
-    animation_peashooter_run_right.set_interval(40);
+    animation_peashooter_run_right.set_interval(80);
     animation_peashooter_run_right.set_loop(true);
-    qDebug("atlas init success");
+    // animation_peashooter_run_right.set_callback(
+    //     []()
+    //     {
+    //         scene_manager->switch_to(SceneManager::SceneType::Game);
+    //     }
+    //     );
+
+    timer.set_wait_time(1000);
+    timer.set_one_shot(false);
+    timer.set_callback(
+        []()
+        {
+            qDebug("shot");
+        });
+    // qDebug("atlas init success");
+    camera.shake(10,350);
 
 }
 
-bool MenuScene::eventFilter(QObject* obj, QEvent* event)
-{
-    if(event->type() == QEvent::KeyPress)
-    {
-        scene_manager->switch_to(SceneManager::SceneType::Menu);
-        return true;
-    }
-    return false;
-}
+
 
 void MenuScene::on_update(int delta)
 {
-    qDebug("menu update");
-    animation_peashooter_run_right.on_update(delta);
+    // qDebug("menu update");
+    animation_peashooter_run_right.on_update(delta);        //短期时间
+    camera.on_update(delta);                                //短期时间
+    timer.on_update(delta);                                 //短期时间
 }
 
 void MenuScene::on_draw(QPainter* widget_painter)
 {
-    qDebug("menu draw");
-    animation_peashooter_run_right.on_draw(100,100, widget_painter);
+    // qDebug("menu draw");
+    const QVector2D pos_camera = camera.get_position();
+    animation_peashooter_run_right.on_draw((int)(100 - pos_camera.x()),(int)(100 - pos_camera.y()), widget_painter);
 }
 
 void MenuScene::on_input()

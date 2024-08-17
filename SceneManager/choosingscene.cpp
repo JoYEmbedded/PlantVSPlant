@@ -31,3 +31,13 @@ void ChoosingScene::on_exit()
 {
     qDebug("choosing exit");
 }
+
+// bool ChoosingScene::eventFilter(QObject* obj, QEvent* event)
+// {
+//     if(event->type() == QEvent::KeyPress)
+//     {
+//         scene_manager->switch_to(SceneManager::SceneType::Game);
+//         return true;
+//     }
+//     return false;
+// }

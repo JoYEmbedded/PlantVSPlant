@@ -87,14 +87,14 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     load_game_resources();
+
     scene_manager = new SceneManager();
-    scene_manager->show();
     menu_scene = new MenuScene();
     game_scene = new GameScene();
     choosing_scene = new ChoosingScene();
 
     scene_manager->set_current_scene(menu_scene);
-
+    scene_manager->show();
 
     return a.exec();
 }

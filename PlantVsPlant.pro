@@ -14,10 +14,11 @@ SOURCES += \
     SceneManager/menuscene.cpp \
     SceneManager/scene.cpp \
     SceneManager/scenemanager.cpp \
+    camera.cpp \
     graphics/animation.cpp \
     graphics/atlas.cpp \
     main.cpp \
-    timemanager.cpp
+    timer.cpp
 
 HEADERS += \
     SceneManager/choosingscene.h \
@@ -25,9 +26,10 @@ HEADERS += \
     SceneManager/menuscene.h \
     SceneManager/scene.h \
     SceneManager/scenemanager.h \
+    camera.h \
     graphics/animation.h \
     graphics/atlas.h \
-    timemanager.h \
+    timer.h \
     util.h
 
 FORMS += \

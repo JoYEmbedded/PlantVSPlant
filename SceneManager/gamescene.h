@@ -2,6 +2,9 @@
 #define GAMESCENE_H
 #include "scene.h"
 #include <QDebug>
+#include "scenemanager.h"
+
+extern SceneManager* scene_manager;
 
 class GameScene : public Scene
 {
@@ -15,6 +18,8 @@ public:
     void on_input();
     void on_exit();
 
+private:
+    // bool eventFilter(QObject* obj, QEvent* event);
 };
 
 #endif // GAMESCENE_H

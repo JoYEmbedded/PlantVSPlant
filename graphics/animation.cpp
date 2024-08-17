@@ -12,6 +12,9 @@ Animation::Animation()
     idx_frame = 0;
 }
 
+Animation::~Animation()
+{}
+
 void Animation::reset()
 {
     timer = 0;
@@ -58,7 +61,7 @@ void Animation::on_update(int delta)
     timer += delta;
     if (timer >= interval)
     {
-        timer = 0;
+        timer = timer - interval;
         idx_frame ++;
         if (idx_frame >= m_atlas->get_size())
         {

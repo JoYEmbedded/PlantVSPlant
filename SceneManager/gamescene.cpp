@@ -24,9 +24,12 @@ void GameScene::on_update(int delta)
 void GameScene::on_draw(QPainter* widget_painter)
 {
     qDebug("游戏局内绘图内容");
+
 }
 
 void GameScene::on_exit()
 {
     qDebug("游戏局内退出");
 }
+
+

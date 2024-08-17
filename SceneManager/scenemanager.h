@@ -6,7 +6,6 @@
 #include <QPainter>
 #include <QEvent>
 #include <QTimer>
-#include "timemanager.h"
 
 extern Scene* menu_scene;       //此处思想很独特
 extern Scene* game_scene;
@@ -30,7 +29,6 @@ public:
         Choosing,
         Game
     };
-    TimeManager time_manager;
     void set_current_scene(Scene* scene);
     void switch_to(SceneType);
     void paintEvent(QPaintEvent *event) override;

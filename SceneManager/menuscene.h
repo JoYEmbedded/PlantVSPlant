@@ -4,6 +4,7 @@
 #include <QDebug>
 #include "scenemanager.h"
 #include "./graphics/animation.h"
+#include "timer.h"
 
 extern Atlas atlas_peashooter_run_right;
 extern SceneManager* scene_manager;
@@ -22,8 +23,9 @@ public:
     void paint(QPainter* widget_painter);
 
 private:
-    bool eventFilter(QObject* obj, QEvent* event);
+    // bool eventFilter(QObject* obj, QEvent* event);
     Animation animation_peashooter_run_right;
+    Timer timer;
 };
 
 #endif // MENUSCENE_H
