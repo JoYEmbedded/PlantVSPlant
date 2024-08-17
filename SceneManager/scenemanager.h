@@ -3,6 +3,7 @@
 
 #include "scene.h"
 #include "camera.h"
+#include "MY_DEF.h"
 #include <QImage>
 #include <QWidget>
 #include <QPainter>

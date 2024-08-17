@@ -3,8 +3,36 @@
 
 #include "scene.h"
 #include "scenemanager.h"
+#include "./graphics/animation.h"
+#include "MY_DEF.h"
+extern QImage img_vs;
+extern QImage img_1P;                                  //1P文本图片
+extern QImage img_2P;                                  //2P文本图片
+extern QImage img_1P_desc;                             //1P键位描述图片
+extern QImage img_2P_desc;                             //2P键位描述图片
+extern QImage img_gravestone_left;                     //朝向左的墓碑图片
+extern QImage img_gravestone_right;
+extern QImage img_selector_tip;                        //选角界面提示信息文本图片
+extern QImage img_selector_background;                 //选角界面背景图
+extern QImage img_1P_selector_btn_idle_left;           //1P向左选择按钮默认状态图片
+extern QImage img_1P_selector_btn_idle_right;
+extern QImage img_1P_selector_btn_down_left;           //1P向左选择按钮按下状态图片
+extern QImage img_1P_selector_btn_down_right;
+extern QImage img_2P_selector_btn_idle_left;           //2P向左选择按钮默认状态图片
+extern QImage img_2P_selector_btn_idle_right;
+extern QImage img_2P_selector_btn_down_left;           //2P向左选择按钮按下状态图片
+extern QImage img_2P_selector_btn_down_right;
+extern QImage img_peashooter_selector_background_left; //选角界面朝向左的豌豆射手背景图片
+extern QImage img_peashooter_selector_background_right;
+extern QImage img_sunflower_selector_background_left;  //选角界面朝向左的向日葵背景图片
+extern QImage img_sunflower_selector_background_right;
+extern Atlas atlas_peashooter_idle_left;               //豌豆射手朝向左的默认动画图集
+extern Atlas atlas_peashooter_idle_right;
+extern Atlas atlas_sunflower_idle_left;
+extern Atlas atlas_sunflower_idle_right;
 
 extern QMediaPlayer music_bgm_game;
+extern QMediaPlayer music_ui_confirm;
 extern QAudioOutput* music_audio_output;
 
 extern SceneManager* scene_manager;
@@ -21,7 +49,26 @@ public:
     void on_exit();
 
 private:
-    // bool eventFilter(QObject* obj, QEvent* event);
+    QPoint pos_img_VS = {0, 0};
+    QPoint pos_img_tip = {0, 0};
+    QPoint pos_img_1P = {0, 0};
+    QPoint pos_img_2P = {0, 0};
+    QPoint pos_img_1P_desc = {0, 0};
+    QPoint pos_img_2P_desc = {0, 0};
+    QPoint pos_img_1P_name = {0, 0};
+    QPoint pos_img_2P_name = {0, 0};
+    QPoint pos_animation_1P = {0, 0};
+    QPoint pos_animation_2P = {0, 0};
+    QPoint pos_img_1P_gravestone = {0, 0};
+    QPoint pos_img_2P_gravestone = {0, 0};
+    QPoint pos_1P_selector_btn_left = {0, 0};
+    QPoint pos_2P_selector_btn_left = {0, 0};
+    QPoint pos_1P_selector_btn_right = {0, 0};
+    QPoint pos_2P_selector_btn_right = {0, 0};
+
+    Animation animation_peashooter;
+    Animation animation_sunflower;
+
 };
 
 #endif // CHOOSINGSCENE_H

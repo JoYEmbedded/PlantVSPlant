@@ -3,6 +3,7 @@
 #include "scene.h"
 #include <QDebug>
 #include "scenemanager.h"
+#include "MY_DEF.h"
 #include "./graphics/animation.h"
 #include "timer.h"
 
@@ -10,6 +11,7 @@ extern QImage img_menu_background;
 extern Atlas atlas_peashooter_run_right;
 
 extern QMediaPlayer music_bgm_menu;
+extern QMediaPlayer music_ui_confirm;
 extern QAudioOutput* music_audio_output;
 
 extern SceneManager* scene_manager;

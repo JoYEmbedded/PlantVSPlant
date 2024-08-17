@@ -21,6 +21,7 @@ SOURCES += \
     timer.cpp
 
 HEADERS += \
+    MY_DEF.h \
     SceneManager/choosingscene.h \
     SceneManager/gamescene.h \
     SceneManager/menuscene.h \

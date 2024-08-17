@@ -3,6 +3,7 @@
 #include "scene.h"
 #include <QDebug>
 #include "scenemanager.h"
+#include "MY_DEF.h"
 
 extern QMediaPlayer music_bgm_game;
 extern QAudioOutput* music_audio_output;

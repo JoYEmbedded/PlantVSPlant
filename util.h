@@ -3,6 +3,7 @@
 #include <QImage>
 #include "./graphics/atlas.h"
 
+
 void flip_img(QImage& img_flipped, const QImage& img_to_flip)
 {
     QTransform transformer;

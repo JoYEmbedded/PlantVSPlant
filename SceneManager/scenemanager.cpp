@@ -6,7 +6,7 @@ SceneManager::SceneManager(QWidget *parent)
     , ui(new Ui::SceneManager)
 {
     ui->setupUi(this);
-    setFixedSize(1280,720);
+    setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     installEventFilter(this);
     timer.setInterval(20);
     connect(&timer,&QTimer::timeout,this, &SceneManager::update_logic);
@@ -53,17 +53,17 @@ void SceneManager::input_process()
 
 bool SceneManager::eventFilter(QObject* obj, QEvent* event)
 {
-    if(current_scene == menu_scene && event->type() == QEvent::KeyPress)
+    if(current_scene == menu_scene && event->type() == QEvent::KeyRelease)
     {
         switch_to(SceneType::Choosing);
         return true;
     }
-    if(current_scene == choosing_scene && event->type() == QEvent::KeyPress)
+    if(current_scene == choosing_scene && event->type() == QEvent::KeyRelease)
     {
         switch_to(SceneType::Game);
         return true;
     }
-    if(current_scene == game_scene && event->type() == QEvent::KeyPress)
+    if(current_scene == game_scene && event->type() == QEvent::KeyRelease)
     {
         switch_to(SceneType::Menu);
         return true;

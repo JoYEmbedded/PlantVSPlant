@@ -57,6 +57,9 @@ void MenuScene::on_input()
 void MenuScene::on_exit()
 {
     qDebug("menu exit");
+    music_bgm_menu.stop();
+    music_ui_confirm.setAudioOutput(music_audio_output);
+    music_ui_confirm.play();
 }
 
 void MenuScene::paint(QPainter* widget_painter)
