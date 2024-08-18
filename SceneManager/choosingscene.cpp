@@ -112,6 +112,7 @@ void ChoosingScene::on_draw(QPainter* widget_painter, const Camera& camera)
         break;
     }
 
+    //绘制动态背景
     QImage cropped_img_p1_right = img_p1_selector_background_shade->copy(0, 0, img_p1_selector_background_shade->width() - choosing_background_scroll_offset_x, img_p1_selector_background_shade->height());
     QImage cropped_img_p1_left = img_p1_selector_background_shade->copy(0, 0, img_p1_selector_background_shade->width(), img_p1_selector_background_shade->height());
     widget_painter->drawImage(QPoint(choosing_background_scroll_offset_x,0), cropped_img_p1_right);
@@ -131,6 +132,38 @@ void ChoosingScene::on_draw(QPainter* widget_painter, const Camera& camera)
     widget_painter->drawImage(pos_img_tip, img_selector_tip);
     widget_painter->drawImage(pos_img_VS, img_vs);
 
+    if(A_Pressed)
+    {
+        widget_painter->drawImage(pos_1P_selector_btn_left, img_1P_selector_btn_down_left);
+    }
+    else
+    {
+        widget_painter->drawImage(pos_1P_selector_btn_left, img_1P_selector_btn_idle_left);
+    }
+    if(D_Pressed)
+    {
+        widget_painter->drawImage(pos_1P_selector_btn_right, img_1P_selector_btn_down_right);
+    }
+    else
+    {
+        widget_painter->drawImage(pos_1P_selector_btn_right, img_1P_selector_btn_idle_right);
+    }
+    if(LeftArrow_Pressed)
+    {
+        widget_painter->drawImage(pos_2P_selector_btn_left, img_2P_selector_btn_down_left);
+    }
+    else
+    {
+        widget_painter->drawImage(pos_2P_selector_btn_left, img_2P_selector_btn_idle_left);
+    }
+    if(RightArrow_Pressed)
+    {
+        widget_painter->drawImage(pos_2P_selector_btn_right, img_2P_selector_btn_down_right);
+    }
+    else
+    {
+        widget_painter->drawImage(pos_2P_selector_btn_right, img_2P_selector_btn_idle_right);
+    }
 
     switch (player_type_1P) {
     case PlayerType::Peashooter:
@@ -158,15 +191,69 @@ void ChoosingScene::on_draw(QPainter* widget_painter, const Camera& camera)
     }
 }
 
-void ChoosingScene::on_input(QEvent* event)
+void ChoosingScene::on_input(QKeyEvent* event, KeyType key_type)
 {
-    // switch (event->KeyRelease) {
-    // case QEvent::Type:
+    if(key_type == KeyType::Press)
+    {
+        switch (event->key()) {
+        case Qt::Key_A:
+            A_Pressed = true;
+            break;
+        case Qt::Key_D:
+            D_Pressed = true;
+            break;
+        case Qt::Key_Left:
+            LeftArrow_Pressed = true;
+            break;
+        case Qt::Key_Right:
+            RightArrow_Pressed = true;
+            break;
+        case Qt::Key_Enter:
+            scene_manager->switch_to(SceneManager::SceneType::Game);
+            break;
+        default:
+            break;
+        }
+    }
 
-    //     break;
-    // default:
-    //     break;
-    // }
+    if(key_type == KeyType::release)
+    {
+        switch (event->key()) {
+        case Qt::Key_A:
+            player_type_1P = PlayerType( ((int)player_type_1P - 1 + (int)PlayerType::Invalid)% (int)PlayerType::Invalid);
+            A_Pressed = false;
+            music_ui_switch.setAudioOutput(music_audio_output);
+            music_ui_switch.setPosition(0);
+            music_ui_switch.play();
+            break;
+        case Qt::Key_D:
+            player_type_1P = PlayerType( ((int)player_type_1P + 1 + (int)PlayerType::Invalid)% (int)PlayerType::Invalid);
+            D_Pressed = false;
+            music_ui_switch.setAudioOutput(music_audio_output);
+            music_ui_switch.setPosition(0);
+            music_ui_switch.play();
+            break;
+        case Qt::Key_Left:
+            player_type_2P = PlayerType( ((int)player_type_2P - 1 + (int)PlayerType::Invalid)% (int)PlayerType::Invalid);
+            LeftArrow_Pressed = false;
+            music_ui_switch.setAudioOutput(music_audio_output);
+            music_ui_switch.setPosition(0);
+            music_ui_switch.play();
+            break;
+        case Qt::Key_Right:
+            player_type_2P = PlayerType( ((int)player_type_2P + 1 + (int)PlayerType::Invalid)% (int)PlayerType::Invalid);
+            RightArrow_Pressed = false;
+            music_ui_switch.setAudioOutput(music_audio_output);
+            music_ui_switch.setPosition(0);
+            music_ui_switch.play();
+            break;
+        case Qt::Key_Enter:
+            scene_manager->switch_to(SceneManager::SceneType::Game);
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 void ChoosingScene::on_exit()

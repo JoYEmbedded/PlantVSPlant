@@ -5,6 +5,7 @@
 #include "scenemanager.h"
 #include "./graphics/animation.h"
 #include "MY_DEF.h"
+
 extern QImage img_vs;
 extern QImage img_1P;                                  //1P文本图片
 extern QImage img_2P;                                  //2P文本图片
@@ -33,7 +34,9 @@ extern Atlas atlas_sunflower_idle_right;
 
 extern QMediaPlayer music_bgm_game;
 extern QMediaPlayer music_ui_confirm;
+extern QMediaPlayer music_ui_switch;
 extern QAudioOutput* music_audio_output;
+
 
 extern SceneManager* scene_manager;
 class ChoosingScene : public Scene
@@ -45,7 +48,7 @@ public:
     void on_enter();
     void on_update(int delta);
     void on_draw(QPainter* widget_painter, const Camera& camera);
-    void on_input(QEvent* event);
+    void on_input(QKeyEvent* event, KeyType key_type);
     void on_exit();
 
 private:
@@ -79,6 +82,11 @@ private:
     PlayerType player_type_2P = PlayerType::Sunflower;      //2P角色类型
 
     int choosing_background_scroll_offset_x = 0;
+
+    bool A_Pressed = false;
+    bool D_Pressed = false;
+    bool LeftArrow_Pressed = false;
+    bool RightArrow_Pressed = false;
 
 private:
     void outtextxy_shaded(int x, int y, QString string_line, QPainter* widget_painter);

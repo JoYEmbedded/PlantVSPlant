@@ -50,7 +50,7 @@ void MenuScene::on_draw(QPainter* widget_painter, const Camera& camera)
     widget_painter->drawImage(QPoint(0,0), img_menu_background);
 }
 
-void MenuScene::on_input(QEvent* event)
+void MenuScene::on_input(QKeyEvent* event, KeyType key_type)
 {
     qDebug("menu input");
 

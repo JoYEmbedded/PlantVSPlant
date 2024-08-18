@@ -131,6 +131,11 @@ void load_game_resources()
     flip_img(img_1P_selector_btn_idle_left, img_1P_selector_btn_idle_right);
     img_1P_selector_btn_down_right.load(":/static/resources/1P_selector_btn_down.png");
     flip_img(img_1P_selector_btn_down_left, img_1P_selector_btn_down_right);
+    img_2P_selector_btn_idle_right.load(":/static/resources/2P_selector_btn_idle.png");
+    flip_img(img_2P_selector_btn_idle_left, img_2P_selector_btn_idle_right);
+    img_2P_selector_btn_down_right.load(":/static/resources/2P_selector_btn_down.png");
+    flip_img(img_2P_selector_btn_down_left, img_2P_selector_btn_down_right);
+
     img_peashooter_selector_background_right.load(":/static/resources/peashooter_selector_background.png");
     flip_img(img_peashooter_selector_background_left, img_peashooter_selector_background_right);
     img_sunflower_selector_background_right.load(":/static/resources/sunflower_selector_background.png");

@@ -19,7 +19,7 @@ public:
     void on_enter();
     void on_update(int delta);
     void on_draw(QPainter* widget_painter, const Camera& camera);
-    void on_input(QEvent* event);
+    void on_input(QKeyEvent* event, KeyType key_type);
     void on_exit();
 
 private:

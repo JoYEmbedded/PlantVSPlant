@@ -11,6 +11,7 @@
 #include <QTimer>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QKeyEvent>
 
 extern Scene* menu_scene;       //此处思想很独特
 extern Scene* game_scene;
@@ -36,6 +37,12 @@ public:
     };
     Camera main_camera;
 
+    enum class KeyType
+    {
+        Pressed = 0,
+        released
+    };
+
     void set_current_scene(Scene* scene);
     void switch_to(SceneType);
     void paintEvent(QPaintEvent *event) override;
@@ -45,7 +52,9 @@ private:
     Scene* current_scene = nullptr;
     QTimer timer;
 
-    bool eventFilter(QObject* obj, QEvent* event) override;
+    // bool eventFilter(QObject* obj, QEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
     void input_process();
     void update_logic();
 };

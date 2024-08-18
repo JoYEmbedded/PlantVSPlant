@@ -7,7 +7,7 @@ SceneManager::SceneManager(QWidget *parent)
 {
     ui->setupUi(this);
     setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-    installEventFilter(this);
+    // installEventFilter(this);
     timer.setInterval(20);
     connect(&timer,&QTimer::timeout,this, &SceneManager::update_logic);
     timer.start();
@@ -51,28 +51,67 @@ void SceneManager::input_process()
 
 }
 
-bool SceneManager::eventFilter(QObject* obj, QEvent* event)
+// bool SceneManager::eventFilter(QObject* obj, QEvent* event)
+// {
+//     if(current_scene == menu_scene && event->type() == QEvent::KeyRelease)
+//     {
+//         switch_to(SceneType::Choosing);
+//         return true;
+//     }
+//     if(current_scene == choosing_scene && event->type() == QEvent::KeyRelease)
+//     {
+//         current_scene->on_input(event);
+//         // switch_to(SceneType::Game);
+//         return true;
+//     }
+//     if(current_scene == game_scene && event->type() == QEvent::KeyRelease)
+//     {
+//         switch_to(SceneType::Menu);
+//         return true;
+//     }
+//     QObject::eventFilter(obj, event);
+//     return false;
+// }
+
+void SceneManager::keyReleaseEvent(QKeyEvent* event)
 {
-    if(current_scene == menu_scene && event->type() == QEvent::KeyRelease)
+    if(current_scene == menu_scene )
     {
         switch_to(SceneType::Choosing);
-        return true;
     }
-    if(current_scene == choosing_scene && event->type() == QEvent::KeyRelease)
+    if(current_scene == choosing_scene)
     {
-        current_scene->on_input(event);
+        current_scene->on_input(event, Scene::KeyType::release);
         // switch_to(SceneType::Game);
-        return true;
     }
-    if(current_scene == game_scene && event->type() == QEvent::KeyRelease)
+    if(current_scene == game_scene)
     {
+        current_scene->on_input(event, Scene::KeyType::release);
         switch_to(SceneType::Menu);
-        return true;
+
     }
-    QObject::eventFilter(obj, event);
-    return false;
+
 }
 
+void SceneManager::keyPressEvent(QKeyEvent* event)
+{
+    // if(current_scene == menu_scene )
+    // {
+    //     switch_to(SceneType::Choosing);
+    // }
+    if(current_scene == choosing_scene)
+    {
+        current_scene->on_input(event, Scene::KeyType::Press);
+        // switch_to(SceneType::Game);
+    }
+    if(current_scene == game_scene)
+    {
+        current_scene->on_input(event, Scene::KeyType::Press);
+        switch_to(SceneType::Menu);
+
+    }
+
+}
 
 void SceneManager::update_logic()
 {
