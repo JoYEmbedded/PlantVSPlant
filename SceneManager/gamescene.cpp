@@ -14,7 +14,7 @@ void GameScene::on_enter()
     music_bgm_game.play();
 }
 
-void GameScene::on_input()
+void GameScene::on_input(QEvent* event)
 {
 
 }

@@ -45,10 +45,17 @@ public:
     void on_enter();
     void on_update(int delta);
     void on_draw(QPainter* widget_painter, const Camera& camera);
-    void on_input();
+    void on_input(QEvent* event);
     void on_exit();
 
 private:
+    enum class PlayerType
+    {
+        Peashooter = 0,
+        Sunflower,
+        Invalid
+    };
+
     QPoint pos_img_VS = {0, 0};
     QPoint pos_img_tip = {0, 0};
     QPoint pos_img_1P = {0, 0};
@@ -68,7 +75,13 @@ private:
 
     Animation animation_peashooter;
     Animation animation_sunflower;
+    PlayerType player_type_1P = PlayerType::Peashooter;     //1P角色类型
+    PlayerType player_type_2P = PlayerType::Sunflower;      //2P角色类型
 
+    int choosing_background_scroll_offset_x = 0;
+
+private:
+    void outtextxy_shaded(int x, int y, QString string_line, QPainter* widget_painter);
 };
 
 #endif // CHOOSINGSCENE_H

@@ -60,7 +60,8 @@ bool SceneManager::eventFilter(QObject* obj, QEvent* event)
     }
     if(current_scene == choosing_scene && event->type() == QEvent::KeyRelease)
     {
-        switch_to(SceneType::Game);
+        current_scene->on_input(event);
+        // switch_to(SceneType::Game);
         return true;
     }
     if(current_scene == game_scene && event->type() == QEvent::KeyRelease)

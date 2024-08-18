@@ -26,7 +26,7 @@ void Scene::on_draw(QPainter* widget_painter, const Camera& camera)
     qDebug("draw");
 }
 
-void Scene::on_input()
+void Scene::on_input(QEvent* event)
 {
     qDebug("scene input");
 }

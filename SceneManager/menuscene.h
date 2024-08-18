@@ -26,7 +26,7 @@ public:
     void on_enter();
     void on_update(int delta);
     void on_draw(QPainter* widget_painter, const Camera& camera);
-    void on_input();
+    void on_input(QEvent* event);
     void on_exit();
     void paint(QPainter* widget_painter);
 

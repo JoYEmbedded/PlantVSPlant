@@ -46,7 +46,11 @@ void ChoosingScene::on_enter()
 
     pos_animation_2P.setY( pos_animation_1P.y());
 
+    pos_img_1P_name.setX( pos_animation_1P.x());
+
     pos_img_1P_name.setY( pos_animation_1P.y() + 155 );
+
+    pos_img_2P_name.setX( pos_animation_2P.x());
 
     pos_img_2P_name.setY( pos_img_1P_name.y());
 
@@ -70,12 +74,53 @@ void ChoosingScene::on_enter()
 
 void ChoosingScene::on_update(int delta)
 {
-
+    animation_peashooter.on_update(delta);
+    animation_sunflower.on_update(delta);
+    choosing_background_scroll_offset_x += 5;
+    if (choosing_background_scroll_offset_x >= img_peashooter_selector_background_left.width())
+    {
+        choosing_background_scroll_offset_x = 0;
+    }
 }
 
 void ChoosingScene::on_draw(QPainter* widget_painter, const Camera& camera)
 {
+    QImage* img_p1_selector_background_shade = nullptr;
+    QImage* img_p2_selector_background_shade = nullptr;
+
     widget_painter->drawImage(QPoint(0,0), img_selector_background);
+
+    switch (player_type_1P) {
+    case PlayerType::Peashooter:
+        img_p2_selector_background_shade = &img_peashooter_selector_background_left;
+        break;
+    case PlayerType::Sunflower:
+        img_p2_selector_background_shade = &img_sunflower_selector_background_left;
+        break;
+    default:
+        break;
+    }
+
+    switch (player_type_2P) {
+    case PlayerType::Peashooter:
+        img_p1_selector_background_shade = &img_peashooter_selector_background_right;
+        break;
+    case PlayerType::Sunflower:
+        img_p1_selector_background_shade = &img_sunflower_selector_background_right;
+        break;
+    default:
+        break;
+    }
+
+    QImage cropped_img_p1_right = img_p1_selector_background_shade->copy(0, 0, img_p1_selector_background_shade->width() - choosing_background_scroll_offset_x, img_p1_selector_background_shade->height());
+    QImage cropped_img_p1_left = img_p1_selector_background_shade->copy(0, 0, img_p1_selector_background_shade->width(), img_p1_selector_background_shade->height());
+    widget_painter->drawImage(QPoint(choosing_background_scroll_offset_x,0), cropped_img_p1_right);
+    widget_painter->drawImage(QPoint(choosing_background_scroll_offset_x - img_p1_selector_background_shade->width(),0), cropped_img_p1_left);
+    QImage cropped_img_p2_left = img_p2_selector_background_shade->copy(choosing_background_scroll_offset_x,0,img_p2_selector_background_shade->width(),img_p2_selector_background_shade->height());
+    QImage cropped_img_p2_right = img_p2_selector_background_shade->copy(0,0,img_p2_selector_background_shade->width(),img_p2_selector_background_shade->height());
+    widget_painter->drawImage(QPoint(WINDOW_WIDTH - img_p2_selector_background_shade->width(),0),cropped_img_p2_left);
+    widget_painter->drawImage(QPoint(WINDOW_WIDTH - choosing_background_scroll_offset_x,0),cropped_img_p2_right);
+
     widget_painter->drawImage(pos_img_1P, img_1P);
     widget_painter->drawImage(pos_img_2P, img_2P);
     widget_painter->drawImage(pos_img_1P_gravestone, img_gravestone_right);
@@ -85,11 +130,43 @@ void ChoosingScene::on_draw(QPainter* widget_painter, const Camera& camera)
     widget_painter->drawImage(pos_img_2P_desc, img_2P_desc);
     widget_painter->drawImage(pos_img_tip, img_selector_tip);
     widget_painter->drawImage(pos_img_VS, img_vs);
+
+
+    switch (player_type_1P) {
+    case PlayerType::Peashooter:
+        animation_peashooter.on_draw(pos_animation_1P.x(), pos_animation_1P.y(), widget_painter);
+        outtextxy_shaded(pos_img_1P_name.x(), pos_img_1P_name.y(), "豌豆射手", widget_painter);
+        break;
+    case PlayerType::Sunflower:
+        animation_sunflower.on_draw(pos_animation_1P.x(), pos_animation_1P.y(), widget_painter);
+        outtextxy_shaded(pos_img_1P_name.x(), pos_img_1P_name.y(), "向日葵", widget_painter);
+    default:
+        break;
+    }
+
+    switch (player_type_2P) {
+    case PlayerType::Peashooter:
+        animation_peashooter.on_draw(pos_animation_2P.x(), pos_animation_2P.y(), widget_painter);
+        outtextxy_shaded(pos_img_2P_name.x(), pos_img_2P_name.y(), "豌豆射手", widget_painter);
+
+        break;
+    case PlayerType::Sunflower:
+        animation_sunflower.on_draw(pos_animation_2P.x(), pos_animation_2P.y(), widget_painter);
+        outtextxy_shaded(pos_img_2P_name.x(), pos_img_2P_name.y(), "向日葵", widget_painter);
+    default:
+        break;
+    }
 }
 
-void ChoosingScene::on_input()
+void ChoosingScene::on_input(QEvent* event)
 {
+    // switch (event->KeyRelease) {
+    // case QEvent::Type:
 
+    //     break;
+    // default:
+    //     break;
+    // }
 }
 
 void ChoosingScene::on_exit()
@@ -108,3 +185,18 @@ void ChoosingScene::on_exit()
 //     }
 //     return false;
 // }
+
+void ChoosingScene::outtextxy_shaded(int x, int y, QString string_line, QPainter* widget_painter)
+{
+    QFont font;
+    font.setPointSize(24);
+    font.setFamily("IPIX");
+    widget_painter->setFont(font);
+    QColor color(45, 45, 45);
+    widget_painter->setPen(color);
+    widget_painter->drawText(x+3, y+3, string_line);
+    color.setRgb(255, 255, 255);
+    widget_painter->setPen(color);
+
+    widget_painter->drawText(x,y, string_line);
+}
