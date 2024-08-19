@@ -87,7 +87,7 @@ void SceneManager::keyReleaseEvent(QKeyEvent* event)
     if(current_scene == game_scene)
     {
         current_scene->on_input(event, Scene::KeyType::release);
-        switch_to(SceneType::Menu);
+        // switch_to(SceneType::Menu);
 
     }
 
@@ -107,8 +107,6 @@ void SceneManager::keyPressEvent(QKeyEvent* event)
     if(current_scene == game_scene)
     {
         current_scene->on_input(event, Scene::KeyType::Press);
-        switch_to(SceneType::Menu);
-
     }
 
 }

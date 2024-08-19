@@ -4,9 +4,20 @@
 #include <QDebug>
 #include "scenemanager.h"
 #include "MY_DEF.h"
+#include "platform.h"
+#include "Players/peashootplayer.h"
+#include "Players/sunflowerplayer.h"
+
+extern QImage img_sky;
+extern QImage img_hills;
+extern QImage img_platform_large;
+extern QImage img_platform_small;
 
 extern QMediaPlayer music_bgm_game;
 extern QAudioOutput* music_audio_output;
+
+extern Player* player_1;
+extern Player* player_2;
 
 extern SceneManager* scene_manager;
 
@@ -24,6 +35,10 @@ public:
 
 private:
     // bool eventFilter(QObject* obj, QEvent* event);
+
+    QPoint pos_img_sky = {0,0};
+    QPoint pos_img_hills = {0,0};
+    std::vector<Platform> platform_list;
 };
 
 #endif // GAMESCENE_H

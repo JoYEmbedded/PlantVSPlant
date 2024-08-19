@@ -5,6 +5,8 @@
 #include "scenemanager.h"
 #include "./graphics/animation.h"
 #include "MY_DEF.h"
+#include "Players/peashootplayer.h"
+#include "Players/sunflowerplayer.h"
 
 extern QImage img_vs;
 extern QImage img_1P;                                  //1P文本图片
@@ -37,6 +39,8 @@ extern QMediaPlayer music_ui_confirm;
 extern QMediaPlayer music_ui_switch;
 extern QAudioOutput* music_audio_output;
 
+extern Player* player_1;
+extern Player* player_2;
 
 extern SceneManager* scene_manager;
 class ChoosingScene : public Scene

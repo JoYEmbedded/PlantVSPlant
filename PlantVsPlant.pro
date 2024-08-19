@@ -9,6 +9,9 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Players/peashootplayer.cpp \
+    Players/player.cpp \
+    Players/sunflowerplayer.cpp \
     SceneManager/choosingscene.cpp \
     SceneManager/gamescene.cpp \
     SceneManager/menuscene.cpp \
@@ -18,10 +21,15 @@ SOURCES += \
     graphics/animation.cpp \
     graphics/atlas.cpp \
     main.cpp \
+    platform.cpp \
     timer.cpp
 
 HEADERS += \
     MY_DEF.h \
+    Players/peashootplayer.h \
+    Players/player.h \
+    Players/player_id.h \
+    Players/sunflowerplayer.h \
     SceneManager/choosingscene.h \
     SceneManager/gamescene.h \
     SceneManager/menuscene.h \
@@ -30,6 +38,7 @@ HEADERS += \
     camera.h \
     graphics/animation.h \
     graphics/atlas.h \
+    platform.h \
     timer.h \
     util.h
 

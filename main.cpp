@@ -6,7 +6,7 @@
 #include "./graphics/atlas.h"
 #include "util.h"
 #include <QApplication>
-
+#include "Players/player.h"
 QImage img_menu_background;                      //主菜单背景图片
 QImage img_vs;;                                 //VS艺术字图片
 QImage img_1P;                                  //1P文本图片
@@ -95,6 +95,11 @@ Scene* menu_scene = nullptr;        //注意此处是Scene而非MenuScene
 Scene* game_scene = nullptr;
 Scene* choosing_scene = nullptr;
 SceneManager* scene_manager = nullptr;
+
+Player* player_1 = nullptr;
+Player* player_2 = nullptr;
+
+bool is_debug = true;
 
 void load_game_resources();
 

@@ -247,6 +247,9 @@ void ChoosingScene::on_input(QKeyEvent* event, KeyType key_type)
             music_ui_switch.setPosition(0);
             music_ui_switch.play();
             break;
+        case Qt::Key_Return:
+            scene_manager->switch_to(SceneManager::SceneType::Game);
+            break;
         case Qt::Key_Enter:
             scene_manager->switch_to(SceneManager::SceneType::Game);
             break;
@@ -258,9 +261,28 @@ void ChoosingScene::on_input(QKeyEvent* event, KeyType key_type)
 
 void ChoosingScene::on_exit()
 {
-    qDebug("choosing exit");
-    // music_ui_confirm.setAudioOutput(music_audio_output);
-    // music_ui_confirm.play();
+    // qDebug("choosing exit");
+
+    switch (player_type_1P) {
+    case PlayerType::Peashooter:
+        player_1 = new PeashootPlayer();
+        break;
+    case PlayerType::Sunflower:
+        player_1 = new SunflowerPlayer();
+    default:
+        break;
+    }
+
+    switch (player_type_2P) {
+    case PlayerType::Peashooter:
+        player_2 = new PeashootPlayer();
+        break;
+    case PlayerType::Sunflower:
+        player_2 = new SunflowerPlayer();
+    default:
+        break;
+    }
+
 }
 
 // bool ChoosingScene::eventFilter(QObject* obj, QEvent* event)
