@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QKeyEvent>
 #include "camera.h"
-
+#include "MY_DEF.h"
 class Scene
 {
 
@@ -12,11 +12,7 @@ class Scene
 public:
     Scene();
     ~Scene();
-    enum class KeyType
-    {
-        Press = 0,
-        release
-    };
+
 
     virtual void on_enter();    //初始化场景
     virtual void on_update(int delta);   //处理数据

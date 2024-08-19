@@ -81,12 +81,12 @@ void SceneManager::keyReleaseEvent(QKeyEvent* event)
     }
     if(current_scene == choosing_scene)
     {
-        current_scene->on_input(event, Scene::KeyType::release);
+        current_scene->on_input(event, KeyType::Release);
         // switch_to(SceneType::Game);
     }
     if(current_scene == game_scene)
     {
-        current_scene->on_input(event, Scene::KeyType::release);
+        current_scene->on_input(event, KeyType::Release);
         // switch_to(SceneType::Menu);
 
     }
@@ -101,12 +101,12 @@ void SceneManager::keyPressEvent(QKeyEvent* event)
     // }
     if(current_scene == choosing_scene)
     {
-        current_scene->on_input(event, Scene::KeyType::Press);
+        current_scene->on_input(event, KeyType::Press);
         // switch_to(SceneType::Game);
     }
     if(current_scene == game_scene)
     {
-        current_scene->on_input(event, Scene::KeyType::Press);
+        current_scene->on_input(event, KeyType::Press);
     }
 
 }

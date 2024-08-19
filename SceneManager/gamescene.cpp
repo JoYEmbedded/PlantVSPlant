@@ -52,11 +52,15 @@ void GameScene::on_enter()
     small_platform_3.shape.left = (float)small_platform_3.render_position.x() + 40;
     small_platform_3.shape.right = (float)small_platform_3.render_position.x() + small_platform_3.img->width() - 40;
     small_platform_3.shape.y = (float)small_platform_3.render_position.y() + img_platform_small.height() / 2;
+
+    player_1->set_position(200, 50);
+    player_2->set_position(975, 50);
 }
 
 void GameScene::on_input(QKeyEvent* event, KeyType key_type)
 {
-
+    player_1->on_input(event, key_type);
+    player_2->on_input(event, key_type);
 }
 void GameScene::on_update(int delta)
 {
@@ -74,7 +78,8 @@ void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
     {
         platform_list[i].on_draw(widget_painter, camera);
     }
-
+    player_1->on_draw(widget_painter);
+    player_2->on_draw(widget_painter);
 }
 
 void GameScene::on_exit()

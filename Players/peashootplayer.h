@@ -2,6 +2,11 @@
 #define PEASHOOTPLAYER_H
 #include "player.h"
 
+extern Atlas atlas_peashooter_idle_left;
+extern Atlas atlas_peashooter_idle_right;
+extern Atlas atlas_peashooter_run_left;
+extern Atlas atlas_peashooter_run_right;
+
 class PeashootPlayer : public Player
 {
 public:
@@ -10,7 +15,7 @@ public:
 
     void on_update(int delta);
     void on_draw(QPainter* widget_painter);
-    void on_input();
+    void on_input(QKeyEvent* event, KeyType key_type);
 
 private:
 

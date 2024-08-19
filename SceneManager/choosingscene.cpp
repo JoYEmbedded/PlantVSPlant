@@ -216,7 +216,7 @@ void ChoosingScene::on_input(QKeyEvent* event, KeyType key_type)
         }
     }
 
-    if(key_type == KeyType::release)
+    if(key_type == KeyType::Release)
     {
         switch (event->key()) {
         case Qt::Key_A:
@@ -272,6 +272,7 @@ void ChoosingScene::on_exit()
     default:
         break;
     }
+    player_1->set_id(PlayerID::P1);
 
     switch (player_type_2P) {
     case PlayerType::Peashooter:
@@ -282,6 +283,7 @@ void ChoosingScene::on_exit()
     default:
         break;
     }
+    player_2->set_id(PlayerID::P2);
 
 }
 

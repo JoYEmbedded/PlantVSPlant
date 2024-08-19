@@ -37,11 +37,6 @@ public:
     };
     Camera main_camera;
 
-    enum class KeyType
-    {
-        Pressed = 0,
-        released
-    };
 
     void set_current_scene(Scene* scene);
     void switch_to(SceneType);
