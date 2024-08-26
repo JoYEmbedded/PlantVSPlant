@@ -32,6 +32,7 @@ public:
     void on_draw(QPainter* widget_painter, const Camera& camera);
     void on_input(QKeyEvent* event, KeyType key_type);
     void on_exit();
+    void move_and_collision(int delta);
 
 private:
     // bool eventFilter(QObject* obj, QEvent* event);
@@ -39,6 +40,8 @@ private:
     QPoint pos_img_sky = {0,0};
     QPoint pos_img_hills = {0,0};
     std::vector<Platform> platform_list;
+
+    const float gravity = 1.6e-3f;
 };
 
 #endif // GAMESCENE_H

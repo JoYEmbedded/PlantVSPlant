@@ -4,6 +4,7 @@
 #include <QPainter>
 #include "graphics/animation.h"
 #include "player_id.h"
+#include "platform.h"
 #include "MY_DEF.h"
 class Player
 {
@@ -17,11 +18,20 @@ public:
     virtual void on_update(int delta);
     virtual void on_draw(QPainter* widget_painter);
     virtual void on_input(QKeyEvent* event, KeyType key_type);
+    void on_run(float distance);
+
     void set_id(PlayerID id);
     void set_position(int x, int y);
+    QPoint get_position();
+    QVector2D get_velocity();
+    QVector2D get_shape();
+    void set_velocity(QVector2D new_velocity);
+
 
 protected:
-    QPoint position;
+    QPoint position;                //角色位置
+    QVector2D velocity;
+    QVector2D shape;                //角色形状尺寸
 
     Animation animation_idle_left;
     Animation animation_idle_right;
@@ -40,6 +50,11 @@ protected:
 
     bool is_facing_right = true;        //角色是否朝向右侧
 
+    const float run_velocity = 0.55f;
+    const float gravity = 1.6e-3f;
+    const float jump_velocity = -0.85f;
+
+    virtual void on_jump();
 
 };
 

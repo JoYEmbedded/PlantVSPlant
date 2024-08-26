@@ -67,6 +67,7 @@ void GameScene::on_update(int delta)
     qDebug("游戏正在运行...");
     player_1->on_update(delta);
     player_2->on_update(delta);
+    move_and_collision(delta);
 }
 
 void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
@@ -87,4 +88,64 @@ void GameScene::on_exit()
     qDebug("游戏局内退出");
 }
 
+void GameScene::move_and_collision(int delta)
+{
 
+    QPoint position_1P = player_1->get_position();
+    QPoint position_2P = player_2->get_position();
+    QVector2D velocity_1P = player_1->get_velocity();
+    QVector2D velocity_2P = player_2->get_velocity();
+    QVector2D shape_1P = player_1->get_shape();
+    QVector2D shape_2P = player_2->get_shape();
+
+    velocity_1P.setY(velocity_1P.y() + gravity * delta);
+    position_1P.setY(position_1P.y() + velocity_1P.y() * delta);
+    velocity_2P.setY(velocity_2P.y() + gravity * delta);
+    position_2P.setY(position_2P.y() + velocity_2P.y() * delta);
+    player_1->set_velocity(velocity_1P);
+    player_1->set_position(position_1P.x(), position_1P.y());
+    player_2->set_velocity(velocity_2P);
+    player_2->set_position(position_2P.x(), position_2P.y());
+    if (velocity_1P.y() > 0)
+    {
+        for(const Platform& platform : platform_list)
+        {
+            const Platform::CollisionShape& shape = platform.shape;
+            bool is_collide_x = std::max(position_1P.x() + shape_1P.x(), shape.right) - std::min<float>(position_1P.x(), shape.left) <= shape.right - shape.left + shape_1P.x();
+            bool is_collide_y = position_1P.y() < shape.y && position_1P.y() + shape_1P.y() >= shape.y;
+            if(is_collide_x && is_collide_y)
+            {
+                float delta_pos_y = velocity_1P.y() * delta;
+                float last_tick_foot_pos_y = position_1P.y() - delta_pos_y;
+                if(last_tick_foot_pos_y <= shape.y)
+                {
+                    player_1->set_position(position_1P.x(), shape.y - shape_1P.y());
+                    player_1->set_velocity(QVector2D(velocity_1P.x(), 0));
+                    break;
+                }
+            }
+        }
+    }
+
+    if (velocity_2P.y() > 0)
+    {
+        for(const Platform& platform : platform_list)
+        {
+            const Platform::CollisionShape& shape = platform.shape;
+            bool is_collide_x = std::max(position_2P.x() + shape_2P.x(), shape.right) - std::min<float>(position_2P.x(), shape.left) <= shape.right - shape.left + shape_2P.x();
+            bool is_collide_y = position_2P.y() < shape.y && position_2P.y() + shape_2P.y() >= shape.y;
+            if(is_collide_x && is_collide_y)
+            {
+                float delta_pos_y = velocity_2P.y() * delta;
+                float last_tick_foot_pos_y = position_2P.y() - delta_pos_y;
+                if(last_tick_foot_pos_y <= shape.y)
+                {
+                    player_2->set_position(position_2P.x(), shape.y - shape_2P.y());
+                    player_2->set_velocity(QVector2D(velocity_2P.x(), 0));
+                    break;
+
+                }
+            }
+        }
+    }
+}

@@ -14,6 +14,8 @@ void Player::on_update(int delta)
     {
         is_facing_right = direction > 0;
         current_animation = is_facing_right ? &animation_run_right : &animation_run_left;
+        float distance = run_velocity * delta * direction;
+        on_run(distance);
     }
     else
     {
@@ -47,6 +49,7 @@ void Player::on_input(QKeyEvent* event, KeyType key_type)
 
             case Qt::Key_K:
                 is_jump_btn_pressed = true;
+                on_jump();
                 break;
 
             case Qt::Key_U:
@@ -69,6 +72,7 @@ void Player::on_input(QKeyEvent* event, KeyType key_type)
 
             case Qt::Key_2:
                 is_jump_btn_pressed = true;
+                on_jump();
                 break;
 
             case Qt::Key_4:
@@ -139,4 +143,37 @@ void Player::set_position(int x, int y)
 {
     this->position.setX(x);
     this->position.setY(y);
+}
+
+void Player::on_run(float distance)
+{
+    this->position.setX(position.x() + distance);
+}
+
+QPoint Player::get_position()
+{
+    return QPoint(position.x(), position.y());
+}
+
+QVector2D Player::get_velocity()
+{
+    return QVector2D(velocity.x(), velocity.y());
+}
+
+QVector2D Player::get_shape()
+{
+    return QVector2D(shape.x(), shape.y());
+}
+
+void Player::set_velocity(QVector2D new_velocity)
+{
+    velocity.setX(new_velocity.x());
+    velocity.setY(new_velocity.y());
+}
+
+void Player::on_jump()
+{
+    if(velocity.y() != 0)
+        return;
+    velocity.setY(jump_velocity);
 }

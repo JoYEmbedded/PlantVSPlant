@@ -12,6 +12,9 @@ PeashootPlayer::PeashootPlayer()
     animation_run_left.set_interval(75);
     animation_run_right.set_interval(75);
 
+    shape.setX(96);
+    shape.setY(96);
+
 }
 
 PeashootPlayer::~PeashootPlayer(){}
