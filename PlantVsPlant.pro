@@ -9,6 +9,10 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Bullet/bullet.cpp \
+    Bullet/peabullet.cpp \
+    Bullet/sunbullet.cpp \
+    Bullet/sunbulletex.cpp \
     Players/peashootplayer.cpp \
     Players/player.cpp \
     Players/sunflowerplayer.cpp \
@@ -25,6 +29,10 @@ SOURCES += \
     timer.cpp
 
 HEADERS += \
+    Bullet/bullet.h \
+    Bullet/peabullet.h \
+    Bullet/sunbullet.h \
+    Bullet/sunbulletex.h \
     MY_DEF.h \
     Players/peashootplayer.h \
     Players/player.h \
