@@ -3,6 +3,10 @@
 Player::Player()
 {
     current_animation = &animation_idle_right;
+
+    timer_attack_cd.set_wait_time(attack_cd);
+    timer_attack_cd.set_one_shot(true);
+    timer_attack_cd.set_callback([&](){can_attack = true;});
 }
 
 Player::~Player(){}
@@ -22,6 +26,7 @@ void Player::on_update(int delta)
         current_animation = is_facing_right ? &animation_idle_right : &animation_idle_left;
     }
     current_animation->on_update(delta);
+    timer_attack_cd.on_update(delta);
 }
 
 void Player::on_draw(QPainter* widget_painter)
@@ -45,6 +50,12 @@ void Player::on_input(QKeyEvent* event, KeyType key_type)
 
             case Qt::Key_J:
                 is_shoot_btn_pressed = true;
+                if(can_attack)
+                {
+                    on_attack();
+                    can_attack = false;
+                    timer_attack_cd.restart();
+                }
                 break;
 
             case Qt::Key_K:
@@ -54,6 +65,11 @@ void Player::on_input(QKeyEvent* event, KeyType key_type)
 
             case Qt::Key_U:
                 is_shoot_ex_btn_pressed = true;
+                if(MP >= 100)
+                {
+                    on_attack_ex();
+                    MP = 0;
+                }
                 break;
             }
             break;
@@ -68,6 +84,12 @@ void Player::on_input(QKeyEvent* event, KeyType key_type)
 
             case Qt::Key_1:
                 is_shoot_btn_pressed = true;
+                if(can_attack)
+                {
+                    on_attack();
+                    can_attack = false;
+                    timer_attack_cd.restart();
+                }
                 break;
 
             case Qt::Key_2:
@@ -77,6 +99,11 @@ void Player::on_input(QKeyEvent* event, KeyType key_type)
 
             case Qt::Key_4:
                 is_shoot_ex_btn_pressed = true;
+                if(MP >= 100)
+                {
+                    on_attack_ex();
+                    MP = 0;
+                }
                 break;
             }
             break;
@@ -147,6 +174,8 @@ void Player::set_position(int x, int y)
 
 void Player::on_run(float distance)
 {
+    if (is_attacking_ex)
+        return;
     this->position.setX(position.x() + distance);
 }
 
@@ -173,7 +202,17 @@ void Player::set_velocity(QVector2D new_velocity)
 
 void Player::on_jump()
 {
-    if(velocity.y() != 0)
+    if(velocity.y() != 0 || is_attacking_ex)
         return;
     velocity.setY(jump_velocity);
+}
+
+void Player::on_attack()
+{
+
+}
+
+void Player::on_attack_ex()
+{
+
 }

@@ -90,7 +90,7 @@ void Bullet::on_update(int delta)
 
 }
 
-void Bullet::on_draw()
+void Bullet::on_draw(QPainter* widget_painter, const Camera& camera)
 {
 
 }

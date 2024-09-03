@@ -6,6 +6,10 @@
 #include "player_id.h"
 #include "platform.h"
 #include "MY_DEF.h"
+#include "Bullet/bullet.h"
+
+extern std::vector<Bullet*> bullet_list;
+
 class Player
 {
 public:
@@ -13,7 +17,7 @@ public:
     ~Player();
 
     int HP = 100;
-    int MP = 100;
+    int MP = 0;
 
     virtual void on_update(int delta);
     virtual void on_draw(QPainter* widget_painter);
@@ -28,7 +32,12 @@ public:
     void set_velocity(QVector2D new_velocity);
 
 
+    virtual void on_attack();
+    virtual void on_attack_ex();
+
 protected:
+
+
     QPoint position;                //角色位置
     QVector2D velocity;
     QVector2D shape;                //角色形状尺寸
@@ -37,6 +46,8 @@ protected:
     Animation animation_idle_right;
     Animation animation_run_left;
     Animation animation_run_right;
+    Animation animation_attack_ex_left;
+    Animation animation_attack_ex_right;
 
     Animation* current_animation = nullptr;     //当前正在播放的动画
 
@@ -50,9 +61,17 @@ protected:
 
     bool is_facing_right = true;        //角色是否朝向右侧
 
+    int attack_cd = 500;
+    bool can_attack = true;             //是否可以释放普通攻击
+    Timer timer_attack_cd;              //普通攻击冷却定时器
+
+    bool is_attacking_ex = false;       //是否正在释放特殊攻击
+
+    bool is_invulnerable = false;           //角色是否处于无敌状态
+    bool is_showing_sketch_frame = false;   //当前帧是否应该显示剪影
     const float run_velocity = 0.55f;
     const float gravity = 1.6e-3f;
-    const float jump_velocity = -0.85f;
+    const float jump_velocity = -0.65f;
 
     virtual void on_jump();
 

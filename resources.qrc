@@ -120,6 +120,7 @@
         <file>resources/sunflower_selector_background.png</file>
         <file>resources/VS.png</file>
         <file alias="/Plants/Util">resources/winnner_bar.png</file>
+        <file>resources/pea.png</file>
     </qresource>
     <qresource prefix="/Plants/Util">
         <file>resources/run_effect_1.png</file>

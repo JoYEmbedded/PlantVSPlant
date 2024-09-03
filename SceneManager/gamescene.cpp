@@ -68,6 +68,19 @@ void GameScene::on_update(int delta)
     player_1->on_update(delta);
     player_2->on_update(delta);
     move_and_collision(delta);
+    //摄像机更新
+    bullet_list.erase(std::remove_if(
+        bullet_list.begin(), bullet_list.end(),
+        [](const Bullet* bullet)
+        {
+            bool deletable = bullet->check_can_remove();
+            if (deletable) delete bullet;
+            return deletable;
+        }),
+                      bullet_list.end());
+
+    for (Bullet* bullet : bullet_list)
+        bullet->on_update(delta);
 }
 
 void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
@@ -81,6 +94,9 @@ void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
     }
     player_1->on_draw(widget_painter);
     player_2->on_draw(widget_painter);
+
+    for (Bullet* bullet : bullet_list)
+        bullet->on_draw(widget_painter, camera);
 }
 
 void GameScene::on_exit()
@@ -147,5 +163,26 @@ void GameScene::move_and_collision(int delta)
                 }
             }
         }
+    }
+
+    for (Bullet* bullet : bullet_list)
+    {
+        if (!bullet->get_valid())
+            continue;
+        if (bullet->get_collide_target() == PlayerID::P1 &&
+            bullet->check_collision(QVector2D(player_1->get_position().x(), player_1->get_position().y()), QVector2D(player_1->get_shape().x(), player_1->get_shape().y())))
+        {
+            bullet->on_collide();
+            bullet->set_valid(false);
+            player_1->HP -= bullet->get_damage();
+        }
+        if (bullet->get_collide_target() == PlayerID::P2 &&
+            bullet->check_collision(QVector2D(player_2->get_position().x(), player_2->get_position().y()), QVector2D(player_2->get_shape().x(), player_2->get_shape().y())))
+        {
+            bullet->on_collide();
+            bullet->set_valid(false);
+            player_2->HP -= bullet->get_damage();
+        }
+
     }
 }

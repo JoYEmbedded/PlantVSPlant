@@ -2,6 +2,8 @@
 #define BULLET_H
 #include <QVector2D>
 #include <functional>
+#include <QPainter>
+#include "camera.h"
 #include "Players/player_id.h"
 #include "MY_DEF.h"
 
@@ -27,7 +29,7 @@ public:
     virtual void on_collide();
     virtual bool check_collision(const QVector2D& other_position, const QVector2D& other_size);
     virtual void on_update(int delta);
-    virtual void on_draw();
+    virtual void on_draw(QPainter* widget_painter, const Camera& camera);
 protected:
     QVector2D size;                     //子弹尺寸
     QVector2D position;                 //子弹位置
