@@ -9,7 +9,6 @@ ChoosingScene::~ChoosingScene() {}
 
 void ChoosingScene::on_enter()
 {
-    qDebug("choosing enter");
     animation_peashooter.set_atlas(&atlas_peashooter_idle_right);
     animation_sunflower.set_atlas(&atlas_sunflower_idle_right);
     animation_peashooter.set_interval(100);
@@ -261,7 +260,6 @@ void ChoosingScene::on_input(QKeyEvent* event, KeyType key_type)
 
 void ChoosingScene::on_exit()
 {
-    // qDebug("choosing exit");
 
     switch (player_type_1P) {
     case PlayerType::Peashooter:

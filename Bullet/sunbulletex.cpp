@@ -10,6 +10,10 @@ SunBulletEx::SunBulletEx()
     animation_idle.set_interval(50);
     animation_idle.set_loop(true);
 
+    animation_explode.set_atlas(&atlas_sun_ex_explode);
+    animation_explode.set_interval(75);
+    animation_explode.set_loop(false);
+    animation_explode.set_callback([&](){can_be_removed = true;});
 }
 
 void SunBulletEx::on_collide()

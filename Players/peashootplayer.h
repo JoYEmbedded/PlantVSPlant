@@ -2,6 +2,7 @@
 #define PEASHOOTPLAYER_H
 #include "player.h"
 #include "Bullet/peabullet.h"
+#include <QDebug>
 
 extern Atlas atlas_peashooter_idle_left;
 extern Atlas atlas_peashooter_idle_right;

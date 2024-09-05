@@ -7,6 +7,14 @@ Player::Player()
     timer_attack_cd.set_wait_time(attack_cd);
     timer_attack_cd.set_one_shot(true);
     timer_attack_cd.set_callback([&](){can_attack = true;});
+
+    timer_invulnerable.set_wait_time(invulnerable_time);
+    timer_invulnerable.set_one_shot(true);
+    timer_invulnerable.set_callback([&](){is_invulnerable = false;});
+
+    timer_invulnerable_blink.set_wait_time(75);
+    timer_invulnerable_blink.set_one_shot(false);
+    timer_invulnerable_blink.set_callback([&](){is_showing_sketch_frame = !is_showing_sketch_frame;});
 }
 
 Player::~Player(){}
@@ -14,7 +22,7 @@ Player::~Player(){}
 void Player::on_update(int delta)
 {
     int direction = is_move_right_btn_pressed - is_move_left_btn_pressed;
-    if(direction != 0)
+    if(direction != 0 && !is_attacking_ex)
     {
         is_facing_right = direction > 0;
         current_animation = is_facing_right ? &animation_run_right : &animation_run_left;
@@ -27,11 +35,23 @@ void Player::on_update(int delta)
     }
     current_animation->on_update(delta);
     timer_attack_cd.on_update(delta);
+    timer_invulnerable.on_update(delta);
+    timer_invulnerable_blink.on_update(delta);
+
+    if (is_showing_sketch_frame)
+    {
+        img_sketch = QImage(current_animation->get_frame().width(), current_animation->get_frame().height(), QImage::Format_ARGB32_Premultiplied);
+        img_sketch.fill(Qt::transparent);
+        sketch_img(current_animation->get_frame(), img_sketch);
+    }
 }
 
 void Player::on_draw(QPainter* widget_painter)
 {
-    current_animation->on_draw(position.x(), position.y(), widget_painter);
+    if( HP > 0 && is_invulnerable && is_showing_sketch_frame)
+        widget_painter->drawImage(QPoint(position.x(), position.y()), img_sketch);
+    else
+        current_animation->on_draw(position.x(), position.y(), widget_painter);
 }
 
 void Player::on_input(QKeyEvent* event, KeyType key_type)
@@ -215,4 +235,15 @@ void Player::on_attack()
 void Player::on_attack_ex()
 {
 
+}
+
+void Player::make_invulnerable()
+{
+    is_invulnerable = true;
+    timer_invulnerable.restart();
+}
+
+bool Player::if_invulnerable()
+{
+    return is_invulnerable;
 }

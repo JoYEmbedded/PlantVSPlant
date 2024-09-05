@@ -165,7 +165,7 @@ void load_game_resources()
     atlas_peashooter_run_right.load_from_file(":/Plants/PeaShooter/resources/peashooter_run_",5);
     flip_atlas(atlas_peashooter_run_left, atlas_peashooter_run_right);
     atlas_peashooter_attack_ex_right.load_from_file(":/Plants/PeaShooter/resources/peashooter_attack_ex_",3);
-    flip_atlas(atlas_peashooter_attack_ex_left, atlas_peashooter_die_right);
+    flip_atlas(atlas_peashooter_attack_ex_left, atlas_peashooter_attack_ex_right);
     atlas_peashooter_die_right.load_from_file(":/Plants/PeaShooter/resources/peashooter_die_",4);
     flip_atlas(atlas_peashooter_die_left, atlas_peashooter_die_right);
 

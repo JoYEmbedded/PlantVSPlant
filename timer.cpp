@@ -50,7 +50,6 @@ void Timer::on_update(int delta)
         }
         shotted = true;
         pass_time = 0;
-        qDebug("timer update");
     }
 
 }

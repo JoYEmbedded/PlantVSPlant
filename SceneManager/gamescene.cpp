@@ -9,7 +9,6 @@ GameScene::~GameScene() {}
 
 void GameScene::on_enter()
 {
-    qDebug("进入游戏局内场景");
     music_bgm_game.setAudioOutput(music_audio_output);
     music_bgm_game.play();
 
@@ -64,7 +63,6 @@ void GameScene::on_input(QKeyEvent* event, KeyType key_type)
 }
 void GameScene::on_update(int delta)
 {
-    qDebug("游戏正在运行...");
     player_1->on_update(delta);
     player_2->on_update(delta);
     move_and_collision(delta);
@@ -85,7 +83,6 @@ void GameScene::on_update(int delta)
 
 void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
 {
-    qDebug("游戏局内绘图内容");
     widget_painter->drawImage(pos_img_sky, img_sky);
     widget_painter->drawImage(pos_img_hills, img_hills);
     for(int i = 0; i < 4; i++)
@@ -101,7 +98,6 @@ void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
 
 void GameScene::on_exit()
 {
-    qDebug("游戏局内退出");
 }
 
 void GameScene::move_and_collision(int delta)
@@ -169,20 +165,27 @@ void GameScene::move_and_collision(int delta)
     {
         if (!bullet->get_valid())
             continue;
-        if (bullet->get_collide_target() == PlayerID::P1 &&
-            bullet->check_collision(QVector2D(player_1->get_position().x(), player_1->get_position().y()), QVector2D(player_1->get_shape().x(), player_1->get_shape().y())))
+        if(!player_1->if_invulnerable())
         {
-            bullet->on_collide();
-            bullet->set_valid(false);
-            player_1->HP -= bullet->get_damage();
+            if (bullet->get_collide_target() == PlayerID::P1 &&
+                bullet->check_collision(QVector2D(player_1->get_position().x(), player_1->get_position().y()), QVector2D(player_1->get_shape().x(), player_1->get_shape().y())))
+            {
+                player_1->make_invulnerable();
+                bullet->on_collide();
+                bullet->set_valid(false);
+                player_1->HP -= bullet->get_damage();
+            }
         }
-        if (bullet->get_collide_target() == PlayerID::P2 &&
-            bullet->check_collision(QVector2D(player_2->get_position().x(), player_2->get_position().y()), QVector2D(player_2->get_shape().x(), player_2->get_shape().y())))
+        if(!player_2->if_invulnerable())
         {
-            bullet->on_collide();
-            bullet->set_valid(false);
-            player_2->HP -= bullet->get_damage();
+            if (bullet->get_collide_target() == PlayerID::P2 &&
+                bullet->check_collision(QVector2D(player_2->get_position().x(), player_2->get_position().y()), QVector2D(player_2->get_shape().x(), player_2->get_shape().y())))
+            {
+                player_2->make_invulnerable();
+                bullet->on_collide();
+                bullet->set_valid(false);
+                player_2->HP -= bullet->get_damage();
+            }
         }
-
     }
 }

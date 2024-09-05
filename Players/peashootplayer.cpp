@@ -27,14 +27,46 @@ PeashootPlayer::PeashootPlayer()
     timer_spawn_pea_ex.set_one_shot(false);
     timer_spawn_pea_ex.set_callback([&](){spawn_pea_bullet(speed_pea_ex);});
 
-    attack_cd = 100;
+    attack_cd = 300;
+    timer_attack_cd.set_wait_time(attack_cd);
 }
 
 PeashootPlayer::~PeashootPlayer(){}
 
 void PeashootPlayer::on_update(int delta)
 {
-    Player::on_update(delta);
+    int direction = is_move_right_btn_pressed - is_move_left_btn_pressed;
+    if(direction != 0 && !is_attacking_ex)
+    {
+        is_facing_right = direction > 0;
+        current_animation = is_facing_right ? &animation_run_right : &animation_run_left;
+        float distance = run_velocity * delta * direction;
+        on_run(distance);
+    }
+    else if(direction != 0 && is_attacking_ex)
+    {
+        is_facing_right = direction > 0;
+        current_animation = is_facing_right ? &animation_attack_ex_right : &animation_attack_ex_left;
+    }
+    else if(direction == 0 && is_attacking_ex)
+    {
+        current_animation = is_facing_right ? &animation_attack_ex_right : &animation_attack_ex_left;
+    }
+    else
+    {
+        current_animation = is_facing_right ? &animation_idle_right : &animation_idle_left;
+    }
+    current_animation->on_update(delta);
+    timer_attack_cd.on_update(delta);
+    timer_invulnerable.on_update(delta);
+    timer_invulnerable_blink.on_update(delta);
+
+    if (is_showing_sketch_frame)
+    {
+        img_sketch = QImage(current_animation->get_frame().width(), current_animation->get_frame().height(), QImage::Format_ARGB32_Premultiplied);
+        img_sketch.fill(Qt::transparent);
+        sketch_img(current_animation->get_frame(), img_sketch);
+    }
     if (is_attacking_ex)
     {
         //shake
@@ -91,8 +123,8 @@ void PeashootPlayer::on_attack_ex()
 {
     is_attacking_ex = true;
     timer_attack_ex.restart();
-
     is_facing_right ? animation_attack_ex_right.reset() : animation_attack_ex_left.reset();
+
     music_pea_shoot_ex.setAudioOutput(music_audio_output);
     music_pea_shoot_ex.play();
 }

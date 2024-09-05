@@ -116,7 +116,6 @@ void SceneManager::update_logic()
     current_scene->on_update(timer.interval());      //长期时间
     // current_scene->on_draw(painter);
     this->repaint();
-    // qDebug("update logic");
 }
 
 void SceneManager::paintEvent(QPaintEvent* event)

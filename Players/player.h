@@ -10,6 +10,7 @@
 
 extern std::vector<Bullet*> bullet_list;
 
+void sketch_img(const QImage& init_img, QImage& sketch_img);
 class Player
 {
 public:
@@ -30,11 +31,12 @@ public:
     QVector2D get_velocity();
     QVector2D get_shape();
     void set_velocity(QVector2D new_velocity);
-
+    void make_invulnerable();
 
     virtual void on_attack();
     virtual void on_attack_ex();
 
+    bool if_invulnerable();
 protected:
 
 
@@ -69,9 +71,13 @@ protected:
 
     bool is_invulnerable = false;           //角色是否处于无敌状态
     bool is_showing_sketch_frame = false;   //当前帧是否应该显示剪影
+    Timer timer_invulnerable;               //无敌状态定时器
+    Timer timer_invulnerable_blink;         //无敌状态闪烁定时器
     const float run_velocity = 0.55f;
     const float gravity = 1.6e-3f;
     const float jump_velocity = -0.65f;
+    const int invulnerable_time = 750;
+    QImage img_sketch;                      //动画帧剪影图片
 
     virtual void on_jump();
 
