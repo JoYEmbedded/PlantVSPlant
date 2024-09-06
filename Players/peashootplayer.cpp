@@ -27,7 +27,7 @@ PeashootPlayer::PeashootPlayer()
     timer_spawn_pea_ex.set_one_shot(false);
     timer_spawn_pea_ex.set_callback([&](){spawn_pea_bullet(speed_pea_ex);});
 
-    attack_cd = 300;
+    attack_cd = 200;
     timer_attack_cd.set_wait_time(attack_cd);
 }
 

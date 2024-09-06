@@ -33,6 +33,8 @@ public:
     void set_velocity(QVector2D new_velocity);
     void make_invulnerable();
 
+    int get_hp() const;
+    int get_mp() const;
     virtual void on_attack();
     virtual void on_attack_ex();
 

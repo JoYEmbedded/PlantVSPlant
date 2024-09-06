@@ -101,6 +101,8 @@ SceneManager* scene_manager = nullptr;
 Player* player_1 = nullptr;
 Player* player_2 = nullptr;
 
+QImage* img_player_1_avatar = nullptr;
+QImage* img_player_2_avatar = nullptr;
 std::vector<Bullet*> bullet_list;
 
 bool is_debug = true;
@@ -193,8 +195,8 @@ void load_game_resources()
     img_1P_winner.load(":/static/resources/1P_winner.png");
     img_2P_winner.load(":/static/resources/2P_winner.png");
     img_winner_bar.load(":/static/resources/winner_bar.png");
-    img_avatar_peashooter.load(":/static/resources/avatar_peashooter.png");
-    img_avatar_sunflower.load(":/static/resources/avatar_peashooter.png");
+    img_avatar_peashooter.load(":/Plants/PeaShooter/resources/avatar_peashooter.png");
+    img_avatar_sunflower.load(":/Plants/Sunflower/resources/avatar_peashooter.png");
 
     //音乐资源加载
 

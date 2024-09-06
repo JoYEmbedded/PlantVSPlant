@@ -7,7 +7,7 @@
 #include "platform.h"
 #include "Players/peashootplayer.h"
 #include "Players/sunflowerplayer.h"
-
+#include "statusbar.h"
 extern QImage img_sky;
 extern QImage img_hills;
 extern QImage img_platform_large;
@@ -18,7 +18,8 @@ extern QAudioOutput* music_audio_output;
 
 extern Player* player_1;
 extern Player* player_2;
-
+extern QImage* img_player_1_avatar;
+extern QImage* img_player_2_avatar;
 extern SceneManager* scene_manager;
 
 class GameScene : public Scene
@@ -40,6 +41,8 @@ private:
     QPoint pos_img_sky = {0,0};
     QPoint pos_img_hills = {0,0};
     std::vector<Platform> platform_list;
+    StatusBar status_bar_1P;
+    StatusBar status_bar_2P;
 
     const float gravity = 1.6e-3f;
 };

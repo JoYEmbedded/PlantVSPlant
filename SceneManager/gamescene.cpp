@@ -54,6 +54,11 @@ void GameScene::on_enter()
 
     player_1->set_position(200, 50);
     player_2->set_position(975, 50);
+
+    status_bar_1P.set_avatar(img_player_1_avatar);
+    status_bar_2P.set_avatar(img_player_2_avatar);
+    status_bar_1P.set_position(235, 625);
+    status_bar_2P.set_position(675, 625);
 }
 
 void GameScene::on_input(QKeyEvent* event, KeyType key_type)
@@ -79,6 +84,11 @@ void GameScene::on_update(int delta)
 
     for (Bullet* bullet : bullet_list)
         bullet->on_update(delta);
+
+    status_bar_1P.set_HP(player_1->get_hp());
+    status_bar_1P.set_MP(player_1->get_mp());
+    status_bar_2P.set_HP(player_2->get_hp());
+    status_bar_2P.set_MP(player_2->get_mp());
 }
 
 void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
@@ -94,6 +104,9 @@ void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
 
     for (Bullet* bullet : bullet_list)
         bullet->on_draw(widget_painter, camera);
+
+    status_bar_1P.on_draw(widget_painter);
+    status_bar_2P.on_draw(widget_painter);
 }
 
 void GameScene::on_exit()

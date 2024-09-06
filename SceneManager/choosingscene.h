@@ -29,6 +29,8 @@ extern QImage img_peashooter_selector_background_left; //选角界面朝向左�
 extern QImage img_peashooter_selector_background_right;
 extern QImage img_sunflower_selector_background_left;  //选角界面朝向左的向日葵背景图片
 extern QImage img_sunflower_selector_background_right;
+extern QImage img_avatar_peashooter;
+extern QImage img_avatar_sunflower;
 extern Atlas atlas_peashooter_idle_left;               //豌豆射手朝向左的默认动画图集
 extern Atlas atlas_peashooter_idle_right;
 extern Atlas atlas_sunflower_idle_left;
@@ -41,6 +43,11 @@ extern QAudioOutput* music_audio_output;
 
 extern Player* player_1;
 extern Player* player_2;
+
+extern QImage* img_player_1_avatar;
+extern QImage* img_player_2_avatar;
+
+
 
 extern SceneManager* scene_manager;
 class ChoosingScene : public Scene

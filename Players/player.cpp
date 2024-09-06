@@ -247,3 +247,13 @@ bool Player::if_invulnerable()
 {
     return is_invulnerable;
 }
+
+int Player::get_hp() const
+{
+    return HP;
+}
+
+int Player::get_mp() const
+{
+    return MP;
+}
