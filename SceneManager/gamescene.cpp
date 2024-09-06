@@ -9,8 +9,7 @@ GameScene::~GameScene() {}
 
 void GameScene::on_enter()
 {
-    music_bgm_game.setAudioOutput(music_audio_output);
-    music_bgm_game.play();
+    music_bgm_game->play();
 
     pos_img_sky.setX((WINDOW_WIDTH - img_sky.width())/2);
     pos_img_sky.setY((WINDOW_HEIGHT - img_sky.height())/2);

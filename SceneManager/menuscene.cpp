@@ -27,8 +27,7 @@ void MenuScene::on_enter()
         });
     // qDebug("atlas init success");
     camera.shake(10,350);
-    music_bgm_menu.setAudioOutput(music_audio_output);
-    music_bgm_menu.play();
+    music_bgm_menu->play();
 
 }
 
@@ -58,9 +57,8 @@ void MenuScene::on_input(QKeyEvent* event, KeyType key_type)
 void MenuScene::on_exit()
 {
     qDebug("menu exit");
-    music_bgm_menu.stop();
-    music_ui_confirm.setAudioOutput(music_audio_output);
-    music_ui_confirm.play();
+    music_bgm_menu->stop();
+    music_ui_confirm->play();
 }
 
 void MenuScene::paint(QPainter* widget_painter)

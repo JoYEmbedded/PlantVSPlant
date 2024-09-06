@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include "camera.h"
 #include "MY_DEF.h"
+#include "musicplayer.h"
 class Scene
 {
 

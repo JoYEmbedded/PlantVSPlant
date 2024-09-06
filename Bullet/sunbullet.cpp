@@ -23,8 +23,7 @@ SunBullet::SunBullet()
 void SunBullet::on_collide()
 {
     Bullet::on_collide();
-    music_sun_explode.setAudioOutput(music_audio_output);
-    music_sun_explode.play();
+    music_sun_explode->play();
 }
 
 void SunBullet::on_update(int delta)

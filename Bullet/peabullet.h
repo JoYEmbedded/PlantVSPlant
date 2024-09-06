@@ -4,10 +4,9 @@
 #include <QMediaPlayer>
 #include "graphics/animation.h"
 
-extern QMediaPlayer music_pea_break_1;
-extern QMediaPlayer music_pea_break_2;
-extern QMediaPlayer music_pea_break_3;
-extern QAudioOutput* music_audio_output;
+extern MusicPlayer* music_pea_break_1;
+extern MusicPlayer* music_pea_break_2;
+extern MusicPlayer* music_pea_break_3;
 
 extern Atlas atlas_pea_break;
 extern QImage img_pea;

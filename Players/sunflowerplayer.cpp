@@ -140,6 +140,5 @@ void SunflowerPlayer::on_attack_ex()
     bullet->set_callback([&](){MP += 50;});
     bullet_list.push_back(bullet);
 
-    music_sun_text.setAudioOutput(music_audio_output);
-    music_sun_text.play();
+    music_sun_text->play();
 }

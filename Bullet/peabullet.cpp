@@ -16,16 +16,13 @@ void PeaBullet::on_collide()
     Bullet::on_collide();
     switch (rand()%3) {
     case 0:
-        music_pea_break_1.setAudioOutput(music_audio_output);
-        music_pea_break_1.play();
+        music_pea_break_1->play();
         break;
     case 1:
-        music_pea_break_2.setAudioOutput(music_audio_output);
-        music_pea_break_2.play();
+        music_pea_break_2->play();
         break;
     case 2:
-        music_pea_break_3.setAudioOutput(music_audio_output);
-        music_pea_break_3.play();
+        music_pea_break_3->play();
         break;
     }
 }

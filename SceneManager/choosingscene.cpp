@@ -221,30 +221,26 @@ void ChoosingScene::on_input(QKeyEvent* event, KeyType key_type)
         case Qt::Key_A:
             player_type_1P = PlayerType( ((int)player_type_1P - 1 + (int)PlayerType::Invalid)% (int)PlayerType::Invalid);
             A_Pressed = false;
-            music_ui_switch.setAudioOutput(music_audio_output);
-            music_ui_switch.setPosition(0);
-            music_ui_switch.play();
+            music_ui_switch->play();
+            // music_ui_switch.setPosition(0);
             break;
         case Qt::Key_D:
             player_type_1P = PlayerType( ((int)player_type_1P + 1 + (int)PlayerType::Invalid)% (int)PlayerType::Invalid);
             D_Pressed = false;
-            music_ui_switch.setAudioOutput(music_audio_output);
-            music_ui_switch.setPosition(0);
-            music_ui_switch.play();
+            music_ui_switch->play();
+            // music_ui_switch.setPosition(0);
             break;
         case Qt::Key_Left:
             player_type_2P = PlayerType( ((int)player_type_2P - 1 + (int)PlayerType::Invalid)% (int)PlayerType::Invalid);
             LeftArrow_Pressed = false;
-            music_ui_switch.setAudioOutput(music_audio_output);
-            music_ui_switch.setPosition(0);
-            music_ui_switch.play();
+            music_ui_switch->play();
+            // music_ui_switch.setPosition(0);
             break;
         case Qt::Key_Right:
             player_type_2P = PlayerType( ((int)player_type_2P + 1 + (int)PlayerType::Invalid)% (int)PlayerType::Invalid);
             RightArrow_Pressed = false;
-            music_ui_switch.setAudioOutput(music_audio_output);
-            music_ui_switch.setPosition(0);
-            music_ui_switch.play();
+            music_ui_switch->play();
+            // music_ui_switch.setPosition(0);
             break;
         case Qt::Key_Return:
             scene_manager->switch_to(SceneManager::SceneType::Game);

@@ -109,12 +109,10 @@ void PeashootPlayer::on_attack()
     spawn_pea_bullet(speed_pea);
     switch (rand()%2) {
     case 0:
-        music_pea_shoot_1.setAudioOutput(music_audio_output);
-        music_pea_shoot_1.play();
+        music_pea_shoot_1->play();
         break;
     case 1:
-        music_pea_shoot_2.setAudioOutput(music_audio_output);
-        music_pea_shoot_2.play();
+        music_pea_shoot_2->play();
         break;
     }
 }
@@ -125,6 +123,5 @@ void PeashootPlayer::on_attack_ex()
     timer_attack_ex.restart();
     is_facing_right ? animation_attack_ex_right.reset() : animation_attack_ex_left.reset();
 
-    music_pea_shoot_ex.setAudioOutput(music_audio_output);
-    music_pea_shoot_ex.play();
+    music_pea_shoot_ex->play();
 }

@@ -10,7 +10,6 @@
 #include <QEvent>
 #include <QTimer>
 #include <QMediaPlayer>
-#include <QAudioOutput>
 #include <QKeyEvent>
 
 extern Scene* menu_scene;       //此处思想很独特

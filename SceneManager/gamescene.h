@@ -13,8 +13,7 @@ extern QImage img_hills;
 extern QImage img_platform_large;
 extern QImage img_platform_small;
 
-extern QMediaPlayer music_bgm_game;
-extern QAudioOutput* music_audio_output;
+extern MusicPlayer* music_bgm_game;
 
 extern Player* player_1;
 extern Player* player_2;

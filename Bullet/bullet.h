@@ -6,6 +6,7 @@
 #include "camera.h"
 #include "Players/player_id.h"
 #include "MY_DEF.h"
+#include "musicplayer.h"
 
 class Bullet
 {

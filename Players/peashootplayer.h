@@ -11,10 +11,9 @@ extern Atlas atlas_peashooter_run_right;
 extern Atlas atlas_peashooter_attack_ex_left;
 extern Atlas atlas_peashooter_attack_ex_right;
 
-extern QMediaPlayer music_pea_shoot_1;
-extern QMediaPlayer music_pea_shoot_2;
-extern QMediaPlayer music_pea_shoot_ex;
-extern QAudioOutput* music_audio_output;
+extern MusicPlayer* music_pea_shoot_1;
+extern MusicPlayer* music_pea_shoot_2;
+extern MusicPlayer* music_pea_shoot_ex;
 
 class PeashootPlayer : public Player
 {

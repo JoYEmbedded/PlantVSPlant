@@ -16,7 +16,7 @@ extern Atlas atlas_sun_text;
 extern Player* player_1;
 extern Player* player_2;
 
-extern QMediaPlayer music_sun_text;
+extern MusicPlayer* music_sun_text;
 
 class SunflowerPlayer : public Player
 {

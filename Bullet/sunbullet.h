@@ -10,8 +10,7 @@ extern Atlas atlas_sun_ex;
 extern Atlas atlas_sun_ex_explode;
 extern Atlas atlas_sun_text;
 
-extern QMediaPlayer music_sun_explode;;
-extern QAudioOutput* music_audio_output;
+extern MusicPlayer* music_sun_explode;;
 
 class SunBullet : public Bullet
 {

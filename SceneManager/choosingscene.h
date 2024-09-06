@@ -36,10 +36,9 @@ extern Atlas atlas_peashooter_idle_right;
 extern Atlas atlas_sunflower_idle_left;
 extern Atlas atlas_sunflower_idle_right;
 
-extern QMediaPlayer music_bgm_game;
-extern QMediaPlayer music_ui_confirm;
-extern QMediaPlayer music_ui_switch;
-extern QAudioOutput* music_audio_output;
+extern MusicPlayer* music_bgm_game;
+extern MusicPlayer* music_ui_confirm;
+extern MusicPlayer* music_ui_switch;
 
 extern Player* player_1;
 extern Player* player_2;

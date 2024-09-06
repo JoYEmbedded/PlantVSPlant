@@ -10,9 +10,8 @@
 extern QImage img_menu_background;
 extern Atlas atlas_peashooter_run_right;
 
-extern QMediaPlayer music_bgm_menu;
-extern QMediaPlayer music_ui_confirm;
-extern QAudioOutput* music_audio_output;
+extern MusicPlayer* music_bgm_menu;
+extern MusicPlayer* music_ui_confirm;
 
 extern SceneManager* scene_manager;
 

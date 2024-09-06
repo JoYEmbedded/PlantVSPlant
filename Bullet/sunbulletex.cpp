@@ -19,8 +19,7 @@ SunBulletEx::SunBulletEx()
 void SunBulletEx::on_collide()
 {
     Bullet::on_collide();
-    music_sun_explode_ex.setAudioOutput(music_audio_output);
-    music_sun_explode_ex.play();
+    music_sun_explode_ex->play();
 
 }
 
