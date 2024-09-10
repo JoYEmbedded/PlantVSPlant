@@ -7,6 +7,7 @@
 #include "platform.h"
 #include "MY_DEF.h"
 #include "Bullet/bullet.h"
+#include "camera.h"
 
 extern std::vector<Bullet*> bullet_list;
 
@@ -20,8 +21,8 @@ public:
     int HP = 100;
     int MP = 0;
 
-    virtual void on_update(int delta);
-    virtual void on_draw(QPainter* widget_painter);
+    virtual void on_update(int delta, Camera& camera);
+    virtual void on_draw(QPainter* widget_painter, const Camera& my_camera);
     virtual void on_input(QKeyEvent* event, KeyType key_type);
     void on_run(float distance);
 

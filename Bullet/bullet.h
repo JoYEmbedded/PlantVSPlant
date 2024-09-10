@@ -29,7 +29,7 @@ public:
     bool check_can_remove() const;
     virtual void on_collide();
     virtual bool check_collision(const QVector2D& other_position, const QVector2D& other_size);
-    virtual void on_update(int delta);
+    virtual void on_update(int delta, Camera& camera);
     virtual void on_draw(QPainter* widget_painter, const Camera& camera);
 protected:
     QVector2D size;                     //子弹尺寸

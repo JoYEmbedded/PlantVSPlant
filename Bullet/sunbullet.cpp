@@ -26,7 +26,7 @@ void SunBullet::on_collide()
     music_sun_explode->play();
 }
 
-void SunBullet::on_update(int delta)
+void SunBullet::on_update(int delta, Camera& camera)
 {
     if(valid)
     {

@@ -16,7 +16,7 @@ void Scene::on_enter()
 
 }
 
-void Scene::on_update(int delta)
+void Scene::on_update(int delta, Camera& camera)
 {
     qDebug("scene update");
 }

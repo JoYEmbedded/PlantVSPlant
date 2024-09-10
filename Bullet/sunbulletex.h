@@ -16,7 +16,7 @@ public:
     ~SunBulletEx();
 
     void on_collide();
-    void on_update(int delta);
+    void on_update(int delta, Camera& camera);
     void on_draw(QPainter* widget_painter, const Camera& camera);
 
     bool check_collision(const QVector2D& other_position, const QVector2D& other_size);

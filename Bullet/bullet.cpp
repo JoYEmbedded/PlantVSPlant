@@ -85,7 +85,7 @@ bool Bullet::check_if_exceed_screen()
     return position.x() + size.x() <= 0 || position.x() >= WINDOW_WIDTH || position.y() >= WINDOW_HEIGHT;
 }
 
-void Bullet::on_update(int delta)
+void Bullet::on_update(int delta, Camera& camera)
 {
 
 }

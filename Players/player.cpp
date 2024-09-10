@@ -19,7 +19,7 @@ Player::Player()
 
 Player::~Player(){}
 
-void Player::on_update(int delta)
+void Player::on_update(int delta, Camera& camera)
 {
     int direction = is_move_right_btn_pressed - is_move_left_btn_pressed;
     if(direction != 0 && !is_attacking_ex)
@@ -46,12 +46,13 @@ void Player::on_update(int delta)
     }
 }
 
-void Player::on_draw(QPainter* widget_painter)
+void Player::on_draw(QPainter* widget_painter, const Camera& my_camera)
 {
+    const QVector2D pos_camera = my_camera.get_position();
     if( HP > 0 && is_invulnerable && is_showing_sketch_frame)
-        widget_painter->drawImage(QPoint(position.x(), position.y()), img_sketch);
+        widget_painter->drawImage(QPoint(position.x() + pos_camera.x(), position.y() + pos_camera.y()), img_sketch);
     else
-        current_animation->on_draw(position.x(), position.y(), widget_painter);
+        current_animation->on_draw(position.x() + pos_camera.x(), position.y() + pos_camera.y(), widget_painter);
 }
 
 void Player::on_input(QKeyEvent* event, KeyType key_type)

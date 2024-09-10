@@ -27,7 +27,7 @@ void PeaBullet::on_collide()
     }
 }
 
-void PeaBullet::on_update(int delta)
+void PeaBullet::on_update(int delta, Camera& camera)
 {
     position += velocity * (float)delta;
     if(!valid)

@@ -33,7 +33,7 @@ PeashootPlayer::PeashootPlayer()
 
 PeashootPlayer::~PeashootPlayer(){}
 
-void PeashootPlayer::on_update(int delta)
+void PeashootPlayer::on_update(int delta, Camera& camera)
 {
     int direction = is_move_right_btn_pressed - is_move_left_btn_pressed;
     if(direction != 0 && !is_attacking_ex)
@@ -69,15 +69,15 @@ void PeashootPlayer::on_update(int delta)
     }
     if (is_attacking_ex)
     {
-        //shake
+        camera.shake(5, 30);
         timer_attack_ex.on_update(delta);
         timer_spawn_pea_ex.on_update(delta);
     }
 }
 
-void PeashootPlayer::on_draw(QPainter* widget_painter)
+void PeashootPlayer::on_draw(QPainter* widget_painter, const Camera& my_camera)
 {
-    Player::on_draw(widget_painter);
+    Player::on_draw(widget_painter, my_camera);
 }
 
 void PeashootPlayer::on_input(QKeyEvent* event, KeyType key_type)

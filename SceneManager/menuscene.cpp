@@ -26,14 +26,13 @@ void MenuScene::on_enter()
             qDebug("shot");
         });
     // qDebug("atlas init success");
-    camera.shake(10,350);
     music_bgm_menu->play();
 
 }
 
 
 
-void MenuScene::on_update(int delta)
+void MenuScene::on_update(int delta, Camera& camera)
 {
     // qDebug("menu update");
     animation_peashooter_run_right.on_update(delta);        //短期时间

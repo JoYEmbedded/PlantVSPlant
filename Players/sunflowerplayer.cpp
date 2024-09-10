@@ -42,7 +42,7 @@ SunflowerPlayer::SunflowerPlayer()
 
 SunflowerPlayer::~SunflowerPlayer(){}
 
-void SunflowerPlayer::on_update(int delta)
+void SunflowerPlayer::on_update(int delta, Camera& camera)
 {
     int direction = is_move_right_btn_pressed - is_move_left_btn_pressed;
     if(direction != 0 && !is_attacking_ex)
@@ -80,9 +80,9 @@ void SunflowerPlayer::on_update(int delta)
         animation_sun_text.on_update(delta);
 }
 
-void SunflowerPlayer::on_draw(QPainter* widget_painter)
+void SunflowerPlayer::on_draw(QPainter* widget_painter, const Camera& my_camera)
 {
-    Player::on_draw(widget_painter);
+    Player::on_draw(widget_painter, my_camera);
     if (is_sun_text_visible)
     {
         QVector2D text_position;

@@ -24,8 +24,8 @@ public:
     SunflowerPlayer();
     ~SunflowerPlayer();
 
-    void on_update(int delta);
-    void on_draw(QPainter* widget_painter);
+    void on_update(int delta, Camera& camera);
+    void on_draw(QPainter* widget_painter, const Camera& my_camera);
     void on_input(QKeyEvent* event, KeyType key_type);
     void on_attack();
     void on_attack_ex();

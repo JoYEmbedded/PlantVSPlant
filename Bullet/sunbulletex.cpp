@@ -23,7 +23,7 @@ void SunBulletEx::on_collide()
 
 }
 
-void SunBulletEx::on_update(int delta)
+void SunBulletEx::on_update(int delta, Camera& camera)
 {
     if(valid)
     {
@@ -33,6 +33,7 @@ void SunBulletEx::on_update(int delta)
     else
     {
         animation_explode.on_update(delta);
+        camera.shake(20, 25);   //duration小于20不正常
     }
     if (check_if_exceed_screen())
         can_be_removed = true;
@@ -49,12 +50,13 @@ bool SunBulletEx::check_collision(const QVector2D& other_position, const QVector
 
 void SunBulletEx::on_draw(QPainter* widget_painter, const Camera& camera)
 {
+    QVector2D pos_camera = camera.get_position();
     if(valid)
     {
-        animation_idle.on_draw(position.x(), position.y(), widget_painter);
+        animation_idle.on_draw(position.x() + pos_camera.x(), position.y() + pos_camera.y(), widget_painter);
     }
     else
     {
-        animation_explode.on_draw(position.x() - explode_render_offset.x(), position.y() - explode_render_offset.y(), widget_painter);
+        animation_explode.on_draw(position.x() - explode_render_offset.x() + pos_camera.x(), position.y() - explode_render_offset.y() + pos_camera.y(), widget_painter);
     }
 }

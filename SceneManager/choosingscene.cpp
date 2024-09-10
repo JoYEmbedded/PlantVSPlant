@@ -71,7 +71,7 @@ void ChoosingScene::on_enter()
 
 }
 
-void ChoosingScene::on_update(int delta)
+void ChoosingScene::on_update(int delta, Camera& camera)
 {
     animation_peashooter.on_update(delta);
     animation_sunflower.on_update(delta);
@@ -84,6 +84,7 @@ void ChoosingScene::on_update(int delta)
 
 void ChoosingScene::on_draw(QPainter* widget_painter, const Camera& camera)
 {
+    const QVector2D pos_camera = camera.get_position();
     QImage* img_p1_selector_background_shade = nullptr;
     QImage* img_p2_selector_background_shade = nullptr;
 

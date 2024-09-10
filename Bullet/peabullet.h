@@ -17,7 +17,7 @@ public:
     PeaBullet();
     void on_collide();
 
-    void on_update(int delta);
+    void on_update(int delta, Camera& camera);
     void on_draw(QPainter* widget_painter, const Camera& camera);
 
 private:

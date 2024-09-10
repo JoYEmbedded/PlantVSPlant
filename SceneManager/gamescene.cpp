@@ -65,12 +65,13 @@ void GameScene::on_input(QKeyEvent* event, KeyType key_type)
     player_1->on_input(event, key_type);
     player_2->on_input(event, key_type);
 }
-void GameScene::on_update(int delta)
+void GameScene::on_update(int delta, Camera& camera)
 {
-    player_1->on_update(delta);
-    player_2->on_update(delta);
+    player_1->on_update(delta, camera);
+    player_2->on_update(delta, camera);
     move_and_collision(delta);
     //摄像机更新
+    camera.on_update(delta);
     bullet_list.erase(std::remove_if(
         bullet_list.begin(), bullet_list.end(),
         [](const Bullet* bullet)
@@ -82,24 +83,27 @@ void GameScene::on_update(int delta)
                       bullet_list.end());
 
     for (Bullet* bullet : bullet_list)
-        bullet->on_update(delta);
+        bullet->on_update(delta, camera);
 
     status_bar_1P.set_HP(player_1->get_hp());
     status_bar_1P.set_MP(player_1->get_mp());
     status_bar_2P.set_HP(player_2->get_hp());
     status_bar_2P.set_MP(player_2->get_mp());
+
+
 }
 
 void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
 {
-    widget_painter->drawImage(pos_img_sky, img_sky);
-    widget_painter->drawImage(pos_img_hills, img_hills);
+    const QVector2D pos_camera = camera.get_position();
+    widget_painter->drawImage(QPoint(pos_img_sky.x() + pos_camera.x(), pos_img_sky.y() + pos_camera.y()), img_sky);
+    widget_painter->drawImage(QPoint(pos_img_hills.x() + pos_camera.x(), pos_img_hills.y() + pos_camera.y()), img_hills);
     for(int i = 0; i < 4; i++)
     {
         platform_list[i].on_draw(widget_painter, camera);
     }
-    player_1->on_draw(widget_painter);
-    player_2->on_draw(widget_painter);
+    player_1->on_draw(widget_painter, camera);
+    player_2->on_draw(widget_painter, camera);
 
     for (Bullet* bullet : bullet_list)
         bullet->on_draw(widget_painter, camera);
