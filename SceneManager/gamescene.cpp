@@ -85,6 +85,12 @@ void GameScene::on_update(int delta, Camera& camera)
     for (Bullet* bullet : bullet_list)
         bullet->on_update(delta, camera);
 
+    const QPoint& position_player_1 = player_1->get_position();
+    const QPoint& position_player_2 = player_2->get_position();
+    if (position_player_1.y() >= WINDOW_HEIGHT)
+        player_1->HP = 0;
+    if (position_player_2.y() >= WINDOW_HEIGHT)
+        player_2->HP = 0;
     status_bar_1P.set_HP(player_1->get_hp());
     status_bar_1P.set_MP(player_1->get_mp());
     status_bar_2P.set_HP(player_2->get_hp());
@@ -125,7 +131,8 @@ void GameScene::move_and_collision(int delta)
     QVector2D velocity_2P = player_2->get_velocity();
     QVector2D shape_1P = player_1->get_shape();
     QVector2D shape_2P = player_2->get_shape();
-
+    float last_velocity_y_1P = velocity_1P.y();
+    float last_velocity_y_2P = velocity_2P.y();
     velocity_1P.setY(velocity_1P.y() + gravity * delta);
     position_1P.setY(position_1P.y() + velocity_1P.y() * delta);
     velocity_2P.setY(velocity_2P.y() + gravity * delta);
@@ -134,6 +141,7 @@ void GameScene::move_and_collision(int delta)
     player_1->set_position(position_1P.x(), position_1P.y());
     player_2->set_velocity(velocity_2P);
     player_2->set_position(position_2P.x(), position_2P.y());
+
     if (velocity_1P.y() > 0)
     {
         for(const Platform& platform : platform_list)
@@ -149,6 +157,8 @@ void GameScene::move_and_collision(int delta)
                 {
                     player_1->set_position(position_1P.x(), shape.y - shape_1P.y());
                     player_1->set_velocity(QVector2D(velocity_1P.x(), 0));
+                    if(last_velocity_y_1P != 0)
+                        player_1->on_land();
                     break;
                 }
             }
@@ -170,6 +180,8 @@ void GameScene::move_and_collision(int delta)
                 {
                     player_2->set_position(position_2P.x(), shape.y - shape_2P.y());
                     player_2->set_velocity(QVector2D(velocity_2P.x(), 0));
+                    if(last_velocity_y_2P != 0)
+                        player_2->on_land();
                     break;
 
                 }

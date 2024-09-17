@@ -4,6 +4,22 @@ Player::Player()
 {
     current_animation = &animation_idle_right;
 
+    animation_jump_effect.set_atlas(&atlas_jump_effect);
+    animation_jump_effect.set_interval(25);
+    animation_jump_effect.set_loop(false);
+    animation_jump_effect.set_callback([&]()
+                                       {
+                             is_jump_effect_visible = false;
+    });
+
+    animation_land_effect.set_atlas(&atlas_land_effect);
+    animation_land_effect.set_interval(50);
+    animation_land_effect.set_loop(false);
+    animation_land_effect.set_callback([&]()
+                                       {
+                             is_land_effect_visible = false;
+    });
+
     timer_attack_cd.set_wait_time(attack_cd);
     timer_attack_cd.set_one_shot(true);
     timer_attack_cd.set_callback([&](){can_attack = true;});
@@ -15,6 +31,29 @@ Player::Player()
     timer_invulnerable_blink.set_wait_time(75);
     timer_invulnerable_blink.set_one_shot(false);
     timer_invulnerable_blink.set_callback([&](){is_showing_sketch_frame = !is_showing_sketch_frame;});
+
+    timer_run_effect_generation.set_wait_time(75);
+    timer_run_effect_generation.set_callback(
+        [&]()
+        {
+            QVector2D particle_position;
+            QImage frame = atlas_run_effect.get_img(0);
+            particle_position.setX(position.x() + (shape.x() - frame.width()) / 2);
+            particle_position.setY(position.y() +(shape.y() - frame.height()));
+            particle_list.emplace_back(particle_position, &atlas_run_effect, 45);
+        });
+    timer_run_effect_generation.set_one_shot(false);
+    timer_die_effect_generation.set_wait_time(35);
+    timer_die_effect_generation.set_callback(
+        [&]()
+        {
+            QVector2D particle_position;
+            QImage frame = atlas_run_effect.get_img(0);
+            particle_position.setX(position.x() + (shape.x() - frame.width()) / 2);
+            particle_position.setY(position.y() + shape.y() - frame.height());
+            particle_list.emplace_back(particle_position, &atlas_run_effect, 150);
+        });
+
 }
 
 Player::~Player(){}
@@ -29,15 +68,43 @@ void Player::on_update(int delta, Camera& camera)
         float distance = run_velocity * delta * direction;
         on_run(distance);
     }
+    else if(direction != 0 && is_attacking_ex)
+    {
+        is_facing_right = direction > 0;
+        current_animation = is_facing_right ? &animation_attack_ex_right : &animation_attack_ex_left;
+        timer_run_effect_generation.pause();
+    }
+    else if(direction == 0 && is_attacking_ex)
+    {
+        current_animation = is_facing_right ? &animation_attack_ex_right : &animation_attack_ex_left;
+        timer_run_effect_generation.pause();
+    }
     else
     {
         current_animation = is_facing_right ? &animation_idle_right : &animation_idle_left;
+        timer_run_effect_generation.pause();
     }
     current_animation->on_update(delta);
+    animation_jump_effect.on_update(delta);
+    animation_land_effect.on_update(delta);
     timer_attack_cd.on_update(delta);
     timer_invulnerable.on_update(delta);
     timer_invulnerable_blink.on_update(delta);
+    timer_run_effect_generation.on_update(delta);
 
+    if (HP <= 0)
+    {
+        timer_die_effect_generation.on_update(delta);
+    }
+    particle_list.erase(std::remove_if(
+        particle_list.begin(), particle_list.end(),
+        [](const Particle& particle)
+        {
+            return !particle.check_valid();
+        }),
+                        particle_list.end());
+    for(Particle& particle : particle_list)
+        particle.on_update(delta, camera);
     if (is_showing_sketch_frame)
     {
         img_sketch = QImage(current_animation->get_frame().width(), current_animation->get_frame().height(), QImage::Format_ARGB32_Premultiplied);
@@ -48,11 +115,26 @@ void Player::on_update(int delta, Camera& camera)
 
 void Player::on_draw(QPainter* widget_painter, const Camera& my_camera)
 {
+
+    for(const Particle& particle : particle_list)
+    {
+        particle.on_draw(widget_painter, my_camera);
+    }
     const QVector2D pos_camera = my_camera.get_position();
+    if(is_jump_effect_visible)
+    {
+        animation_jump_effect.on_draw((int)position_jump_effect.x() + pos_camera.x(), (int)position_jump_effect.y() + pos_camera.y(), widget_painter);
+    }
+    if(is_land_effect_visible)
+    {
+        animation_land_effect.on_draw((int)position_land_effect.x() + pos_camera.x(), (int)position_land_effect.y() + pos_camera.y(), widget_painter);
+    }
     if( HP > 0 && is_invulnerable && is_showing_sketch_frame)
         widget_painter->drawImage(QPoint(position.x() + pos_camera.x(), position.y() + pos_camera.y()), img_sketch);
     else
         current_animation->on_draw(position.x() + pos_camera.x(), position.y() + pos_camera.y(), widget_painter);
+
+
 }
 
 void Player::on_input(QKeyEvent* event, KeyType key_type)
@@ -198,6 +280,7 @@ void Player::on_run(float distance)
     if (is_attacking_ex)
         return;
     this->position.setX(position.x() + distance);
+    timer_run_effect_generation.resume();
 }
 
 QPoint Player::get_position()
@@ -226,6 +309,24 @@ void Player::on_jump()
     if(velocity.y() != 0 || is_attacking_ex)
         return;
     velocity.setY(jump_velocity);
+    is_jump_effect_visible = true;
+    animation_jump_effect.reset();
+
+    float effect_frame_width = animation_jump_effect.get_frame().width();
+    float effect_frame_height = animation_jump_effect.get_frame().height();
+    position_jump_effect.setX( position.x() + (shape.x() - effect_frame_width) / 2);
+    position_jump_effect.setY( position.y() + shape.y() - effect_frame_height);
+}
+
+void Player::on_land()
+{
+    is_land_effect_visible = true;
+    animation_land_effect.reset();
+
+    float effect_frame_width = animation_jump_effect.get_frame().width();
+    float effect_frame_height = animation_jump_effect.get_frame().height();
+    position_land_effect.setX( position.x() + (shape.x() - effect_frame_width) / 2);
+    position_land_effect.setY( position.y() + shape.y() - effect_frame_height);
 }
 
 void Player::on_attack()

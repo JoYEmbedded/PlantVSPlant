@@ -24,9 +24,9 @@ SOURCES += \
     camera.cpp \
     graphics/animation.cpp \
     graphics/atlas.cpp \
+    graphics/particle.cpp \
     main.cpp \
     musicplayer.cpp \
-    particle.cpp \
     platform.cpp \
     statusbar.cpp \
     timer.cpp
@@ -49,8 +49,8 @@ HEADERS += \
     camera.h \
     graphics/animation.h \
     graphics/atlas.h \
+    graphics/particle.h \
     musicplayer.h \
-    particle.h \
     platform.h \
     statusbar.h \
     timer.h \

@@ -8,8 +8,13 @@
 #include "MY_DEF.h"
 #include "Bullet/bullet.h"
 #include "camera.h"
+#include "graphics/particle.h"
+#include "graphics/animation.h"
 
 extern std::vector<Bullet*> bullet_list;
+extern Atlas atlas_run_effect;
+extern Atlas atlas_jump_effect;
+extern Atlas atlas_land_effect;
 
 void sketch_img(const QImage& init_img, QImage& sketch_img);
 class Player
@@ -40,6 +45,8 @@ public:
     virtual void on_attack_ex();
 
     bool if_invulnerable();
+
+    virtual void on_land();
 protected:
 
 
@@ -53,6 +60,9 @@ protected:
     Animation animation_run_right;
     Animation animation_attack_ex_left;
     Animation animation_attack_ex_right;
+    Animation animation_jump_effect;
+    Animation animation_land_effect;
+
 
     Animation* current_animation = nullptr;     //当前正在播放的动画
 
@@ -63,6 +73,10 @@ protected:
     bool is_shoot_btn_pressed = false;
     bool is_jump_btn_pressed = false;
     bool is_shoot_ex_btn_pressed = false;
+    bool is_jump_effect_visible = false;
+    bool is_land_effect_visible = false;
+    QVector2D position_jump_effect;
+    QVector2D position_land_effect;
 
     bool is_facing_right = true;        //角色是否朝向右侧
 
@@ -82,7 +96,12 @@ protected:
     const int invulnerable_time = 750;
     QImage img_sketch;                      //动画帧剪影图片
 
+    Timer timer_run_effect_generation;      //跑动特效粒子发射定时器
+    Timer timer_die_effect_generation;      //死亡特效粒子发射定时器
+    std::vector<Particle> particle_list;    //粒子对象
+
     virtual void on_jump();
+
 
 };
 
