@@ -21,7 +21,7 @@ extern MusicPlayer* music_sun_text;
 class SunflowerPlayer : public Player
 {
 public:
-    SunflowerPlayer();
+    SunflowerPlayer(bool facing_right = true);
     ~SunflowerPlayer();
 
     void on_update(int delta, Camera& camera);

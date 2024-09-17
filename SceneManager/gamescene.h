@@ -13,7 +13,12 @@ extern QImage img_hills;
 extern QImage img_platform_large;
 extern QImage img_platform_small;
 
+extern QImage img_1P_winner;
+extern QImage img_2P_winner;
+extern QImage img_winner_bar;
+
 extern MusicPlayer* music_bgm_game;
+extern MusicPlayer* music_ui_win;
 
 extern Player* player_1;
 extern Player* player_2;
@@ -39,11 +44,23 @@ private:
 
     QPoint pos_img_sky = {0,0};
     QPoint pos_img_hills = {0,0};
+    const float speed_winner_bar = 3.0f;
+    const float speed_winner_text = 1.5f;
+    QPoint pos_img_winner_bar = {0, 0};
+    QPoint pos_img_winner_text = {0, 0};
+    int pos_x_img_winner_bar_dst = 0;
+    int pos_x_img_winner_text_dst = 0;
+    Timer timer_winner_slide_in;
+    Timer timer_winner_slide_out;
+    bool is_slide_out_started = false;
+
     std::vector<Platform> platform_list;
     StatusBar status_bar_1P;
     StatusBar status_bar_2P;
 
     const float gravity = 1.6e-3f;
+
+    bool is_game_over = false;
 };
 
 #endif // GAMESCENE_H

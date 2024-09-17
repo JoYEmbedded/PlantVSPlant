@@ -273,11 +273,11 @@ void ChoosingScene::on_exit()
 
     switch (player_type_2P) {
     case PlayerType::Peashooter:
-        player_2 = new PeashootPlayer();
+        player_2 = new PeashootPlayer(false);
         img_player_2_avatar = &img_avatar_peashooter;
         break;
     case PlayerType::Sunflower:
-        player_2 = new SunflowerPlayer();
+        player_2 = new SunflowerPlayer(false);
         img_player_2_avatar = &img_avatar_sunflower;
     default:
         break;

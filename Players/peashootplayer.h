@@ -18,7 +18,7 @@ extern MusicPlayer* music_pea_shoot_ex;
 class PeashootPlayer : public Player
 {
 public:
-    PeashootPlayer();
+    PeashootPlayer(bool facing_right = true);
     ~PeashootPlayer();
 
     void on_update(int delta, Camera& camera);

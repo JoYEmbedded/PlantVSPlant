@@ -15,12 +15,14 @@ extern std::vector<Bullet*> bullet_list;
 extern Atlas atlas_run_effect;
 extern Atlas atlas_jump_effect;
 extern Atlas atlas_land_effect;
+extern QImage img_1P_cursor;
+extern QImage img_2P_cursor;
 
 void sketch_img(const QImage& init_img, QImage& sketch_img);
 class Player
 {
 public:
-    Player();
+    Player(bool facing_right = true);
     ~Player();
 
     int HP = 100;
@@ -47,6 +49,8 @@ public:
     bool if_invulnerable();
 
     virtual void on_land();
+
+    int last_hurt_direction;
 protected:
 
 
@@ -75,6 +79,7 @@ protected:
     bool is_shoot_ex_btn_pressed = false;
     bool is_jump_effect_visible = false;
     bool is_land_effect_visible = false;
+    bool is_die_animation_begin = false;
     QVector2D position_jump_effect;
     QVector2D position_land_effect;
 
@@ -101,6 +106,12 @@ protected:
     std::vector<Particle> particle_list;    //粒子对象
 
     virtual void on_jump();
+
+    bool is_cursor_visible = true;
+    Timer timer_cursor_visibility;
+
+    /* 死亡动画控制 */
+
 
 
 };

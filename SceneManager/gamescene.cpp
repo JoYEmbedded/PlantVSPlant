@@ -9,6 +9,31 @@ GameScene::~GameScene() {}
 
 void GameScene::on_enter()
 {
+    is_game_over = false;
+    is_slide_out_started = false;
+    pos_img_winner_bar.setX(-img_winner_bar.width());
+    pos_img_winner_bar.setY((WINDOW_HEIGHT - img_winner_bar.height()) / 2);
+    pos_x_img_winner_bar_dst = (WINDOW_WIDTH - img_winner_bar.width()) / 2;
+
+    pos_img_winner_text.setX(pos_img_winner_bar.x());
+    pos_img_winner_text.setY((WINDOW_HEIGHT - img_1P_winner.height()) / 2);
+    pos_x_img_winner_text_dst = (WINDOW_WIDTH - img_1P_winner.width()) / 2;
+
+    timer_winner_slide_in.restart();
+    timer_winner_slide_in.set_wait_time(2500);
+    timer_winner_slide_in.set_one_shot(true);
+    timer_winner_slide_in.set_callback([&]()
+                                       {
+                             is_slide_out_started = true;
+    });
+
+    timer_winner_slide_out.restart();
+    timer_winner_slide_out.set_wait_time(1000);
+    timer_winner_slide_out.set_one_shot(true);
+    timer_winner_slide_out.set_callback([&]()
+                                        {
+                              scene_manager->switch_to(SceneManager::SceneType::Menu);
+    });
     music_bgm_game->play();
 
     pos_img_sky.setX((WINDOW_WIDTH - img_sky.width())/2);
@@ -96,6 +121,31 @@ void GameScene::on_update(int delta, Camera& camera)
     status_bar_2P.set_HP(player_2->get_hp());
     status_bar_2P.set_MP(player_2->get_mp());
 
+    if(player_1->get_hp() <= 0 || player_2->get_hp() <= 0)
+    {
+        if(!is_game_over)
+        {
+            music_bgm_game->stop();
+            music_ui_win->play();
+        }
+        is_game_over = true;
+    }
+
+    if(is_game_over)
+    {
+        pos_img_winner_bar.setX(pos_img_winner_bar.x() + (int)(speed_winner_bar * delta));
+        pos_img_winner_text.setX(pos_img_winner_text.x() + (int)(speed_winner_text * delta));
+        if(!is_slide_out_started)
+        {
+            timer_winner_slide_in.on_update(delta);
+            if(pos_img_winner_bar.x() > pos_x_img_winner_bar_dst)
+                pos_img_winner_bar.setX(pos_x_img_winner_bar_dst);
+            if(pos_img_winner_text.x() > pos_x_img_winner_text_dst)
+                pos_img_winner_text.setX(pos_x_img_winner_text_dst);
+        }
+        else
+            timer_winner_slide_out.on_update(delta);
+    }
 
 }
 
@@ -114,12 +164,26 @@ void GameScene::on_draw(QPainter* widget_painter, const Camera& camera)
     for (Bullet* bullet : bullet_list)
         bullet->on_draw(widget_painter, camera);
 
+    if(is_game_over)
+    {
+        widget_painter->drawImage(QPoint(pos_img_winner_bar.x(), pos_img_winner_bar.y()), img_winner_bar);
+        widget_painter->drawImage(QPoint(pos_img_winner_text.x(), pos_img_winner_text.y()), player_1->get_hp() > 0 ? img_1P_winner : img_2P_winner);
+    }
+
     status_bar_1P.on_draw(widget_painter);
     status_bar_2P.on_draw(widget_painter);
+
+
 }
 
 void GameScene::on_exit()
 {
+    delete player_1;
+    delete player_2;
+    player_1 = nullptr;
+    player_2 = nullptr;
+
+    bullet_list.clear();
 }
 
 void GameScene::move_and_collision(int delta)
@@ -142,7 +206,8 @@ void GameScene::move_and_collision(int delta)
     player_2->set_velocity(velocity_2P);
     player_2->set_position(position_2P.x(), position_2P.y());
 
-    if (velocity_1P.y() > 0)
+
+    if (velocity_1P.y() > 0 && player_1->HP > 0)
     {
         for(const Platform& platform : platform_list)
         {
@@ -165,7 +230,7 @@ void GameScene::move_and_collision(int delta)
         }
     }
 
-    if (velocity_2P.y() > 0)
+    if (velocity_2P.y() > 0 && player_2->HP > 0)
     {
         for(const Platform& platform : platform_list)
         {
@@ -202,6 +267,7 @@ void GameScene::move_and_collision(int delta)
                 bullet->on_collide();
                 bullet->set_valid(false);
                 player_1->HP -= bullet->get_damage();
+                player_1->last_hurt_direction = bullet->get_position().x() - player_1->get_position().x();
             }
         }
         if(!player_2->if_invulnerable())
@@ -213,6 +279,7 @@ void GameScene::move_and_collision(int delta)
                 bullet->on_collide();
                 bullet->set_valid(false);
                 player_2->HP -= bullet->get_damage();
+                player_2->last_hurt_direction = bullet->get_position().x() - player_2->get_position().x();
             }
         }
     }

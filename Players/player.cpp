@@ -1,8 +1,8 @@
 #include "player.h"
 
-Player::Player()
+Player::Player(bool facing_right) : is_facing_right(facing_right)
 {
-    current_animation = &animation_idle_right;
+    current_animation = is_facing_right ? &animation_idle_right : &animation_idle_left;
 
     animation_jump_effect.set_atlas(&atlas_jump_effect);
     animation_jump_effect.set_interval(25);
@@ -54,6 +54,12 @@ Player::Player()
             particle_list.emplace_back(particle_position, &atlas_run_effect, 150);
         });
 
+    timer_cursor_visibility.set_wait_time(2500);
+    timer_cursor_visibility.set_one_shot(true);
+    timer_cursor_visibility.set_callback([&]()
+                                         {
+        is_cursor_visible = false;
+    });
 }
 
 Player::~Player(){}
@@ -91,10 +97,18 @@ void Player::on_update(int delta, Camera& camera)
     timer_invulnerable.on_update(delta);
     timer_invulnerable_blink.on_update(delta);
     timer_run_effect_generation.on_update(delta);
+    timer_cursor_visibility.on_update(delta);
 
     if (HP <= 0)
     {
         timer_die_effect_generation.on_update(delta);
+        if(!is_die_animation_begin)
+        {
+            velocity.setX(last_hurt_direction < 0 ? 0.35f : -0.35f);
+            velocity.setY(-1.0f);
+            is_die_animation_begin = true;
+        }
+
     }
     particle_list.erase(std::remove_if(
         particle_list.begin(), particle_list.end(),
@@ -111,6 +125,7 @@ void Player::on_update(int delta, Camera& camera)
         img_sketch.fill(Qt::transparent);
         sketch_img(current_animation->get_frame(), img_sketch);
     }
+    qDebug() << velocity.x();
 }
 
 void Player::on_draw(QPainter* widget_painter, const Camera& my_camera)
@@ -133,6 +148,18 @@ void Player::on_draw(QPainter* widget_painter, const Camera& my_camera)
         widget_painter->drawImage(QPoint(position.x() + pos_camera.x(), position.y() + pos_camera.y()), img_sketch);
     else
         current_animation->on_draw(position.x() + pos_camera.x(), position.y() + pos_camera.y(), widget_painter);
+
+    if(is_cursor_visible)
+    {
+        switch (id) {
+        case PlayerID::P1:
+            widget_painter->drawImage(QPoint(position.x() + (shape.x() - img_1P_cursor.width()) / 2 + pos_camera.x(), position.y() - img_1P_cursor.height() + pos_camera.y()), img_1P_cursor);
+            break;
+        case PlayerID::P2:
+            widget_painter->drawImage(QPoint(position.x() + (shape.x() - img_2P_cursor.width()) / 2 + pos_camera.x(), position.y() - img_2P_cursor.height() + pos_camera.y()), img_2P_cursor);
+            break;
+        }
+    }
 
 
 }

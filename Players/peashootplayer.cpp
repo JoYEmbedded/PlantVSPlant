@@ -1,6 +1,6 @@
 #include "peashootplayer.h"
 
-PeashootPlayer::PeashootPlayer()
+PeashootPlayer::PeashootPlayer(bool facing_right) : Player(facing_right)
 {
     animation_idle_left.set_atlas(&atlas_peashooter_idle_left);
     animation_idle_right.set_atlas(&atlas_peashooter_idle_right);
